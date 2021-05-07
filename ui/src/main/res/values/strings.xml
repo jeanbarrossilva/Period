@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Period</string>
+
+    <string name="SearchBox_hint">Search…</string>
+
+    <string name="menu_item_toolbar_search">Search</string>
+    <string name="menu_item_toolbar_exit_search">Exit Search</string>
+    <string name="menu_item_toolbar_sort">Sort</string>
+
+    <string name="content_description_fab">Sort</string>
+
+    <string name="MaterialDialog_title_sort">Sort by…</string>
+</resources>

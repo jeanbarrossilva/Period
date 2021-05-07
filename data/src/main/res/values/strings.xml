@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ChemicalElementSortingOption_AtomicNumber">Atomic number</string>
+    <string name="ChemicalElementSortingOption_AtomicMass">Atomic mass</string>
+    <string name="ChemicalElementSortingOption_Name">Name</string>
+    <string name="ChemicalElementSortingOption_Kind">Kind</string>
+</resources>

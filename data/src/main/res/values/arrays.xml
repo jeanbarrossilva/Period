@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ChemicalElementSortingOption_values">
+        <item>@string/ChemicalElementSortingOption_AtomicMass</item>
+        <item>@string/ChemicalElementSortingOption_AtomicNumber</item>
+        <item>@string/ChemicalElementSortingOption_Name</item>
+        <item>@string/ChemicalElementSortingOption_Kind</item>
+    </string-array>
+</resources>

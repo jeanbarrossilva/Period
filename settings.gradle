@@ -1,0 +1,5 @@
+rootProject.name = "Period"
+include ':data'
+include ':extensions'
+include ':ui'
+include ':app'

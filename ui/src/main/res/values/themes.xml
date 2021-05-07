@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style
+        name="Theme.Period"
+        parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">?android:colorBackground</item>
+        <item name="android:navigationBarColor">@color/cardViewBackground</item>
+        <item name="android:windowLightStatusBar">@bool/isSystemInLightTheme</item>
+        <item
+            name="android:windowLightNavigationBar"
+            tools:targetApi="27">
+            @bool/isSystemInLightTheme
+        </item>
+        <item name="android:colorEdgeEffect">@color/edgeEffect</item>
+    </style>
+</resources>
