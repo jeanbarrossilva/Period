@@ -37,11 +37,11 @@ class MainViewModel: ViewModel() {
     }
 
     fun listenToSearchEvents(activity: MainActivity) {
+        exitSearchOnKeyboardClosed(activity)
         activity.addOnSearchEventListener(OnSearchEventListener { isSearching ->
             this.isSearching = isSearching
             activity.searchBox.isVisible = isSearching
             configSearchMenuItems(activity)
-            exitSearchOnKeyboardClosed(activity)
         })
     }
 
