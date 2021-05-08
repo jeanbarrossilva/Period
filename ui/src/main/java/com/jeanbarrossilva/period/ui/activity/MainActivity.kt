@@ -31,7 +31,7 @@ class MainActivity: AppCompatActivity(), OnSearchEventListener, SearchBox.OnQuer
 		assignViews()
 		viewModel.run {
 			configOnBackPressed(this@MainActivity)
-			configSearchItem(this@MainActivity)
+			configSearchItems(this@MainActivity)
 			listenToSearchEvents(this@MainActivity)
 			listenToQueryChange(this@MainActivity)
 		}
@@ -39,7 +39,7 @@ class MainActivity: AppCompatActivity(), OnSearchEventListener, SearchBox.OnQuer
 
 	override fun onOptionsItemSelected(item: MenuItem) = true.also {
 		if (item.itemId == R.id.menu_item_search)
-			viewModel.configSearchItem(this)
+			viewModel.configSearchItems(this)
 	}
 
 	override fun onStartSearch() = onSearchEventListeners.forEach {

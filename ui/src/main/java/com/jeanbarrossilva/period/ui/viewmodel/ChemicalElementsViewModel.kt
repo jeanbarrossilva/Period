@@ -4,15 +4,15 @@ import android.animation.ValueAnimator
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.jeanbarrossilva.period.data.ChemicalElementSortingOption
 import com.jeanbarrossilva.period.extensions.addUpdateListener
-import com.jeanbarrossilva.period.extensions.doOnEnd
+import com.jeanbarrossilva.period.extensions.animator.doOnEnd
+import com.jeanbarrossilva.period.extensions.dialog
 import com.jeanbarrossilva.period.extensions.filter.clear
 import com.jeanbarrossilva.period.extensions.fragment.withFab
 import com.jeanbarrossilva.period.extensions.number.dp
-import com.jeanbarrossilva.period.extensions.setPadding
+import com.jeanbarrossilva.period.extensions.view.updatePadding
 import com.jeanbarrossilva.period.ui.R
 import com.jeanbarrossilva.period.ui.activity.MainActivity
 import com.jeanbarrossilva.period.ui.adapter.ChemicalElementAdapter
@@ -31,12 +31,10 @@ class ChemicalElementsViewModel(fragment: ChemicalElementsFragment): ViewModel()
         fragment.withFab {
             setImageResource(R.drawable.ic_round_filter_alt_24)
             setOnClickListener {
-                MaterialDialog(context).show {
+                context.dialog {
                     title(R.string.MaterialDialog_title_sort)
                     listItemsSingleChoice(items = sortingOptionTitles, initialSelection = ChemicalElementSortingOption.getPreferredIndex(context)) { _, index, _ ->
                         sortingOption.value = ChemicalElementSortingOption.values(context)[index]
-                    }
-                    positiveButton {
                         dismiss()
                     }
                 }
@@ -58,14 +56,13 @@ class ChemicalElementsViewModel(fragment: ChemicalElementsFragment): ViewModel()
     }
 
     @Suppress("Recycle")
-    fun bringElementsDownOnSearch(fragment: ChemicalElementsFragment) {
+    fun freeUpSpaceForBoxOnSearchEvent(fragment: ChemicalElementsFragment) {
         (fragment.activity as? MainActivity)?.addOnSearchEventListener(OnSearchEventListener { isSearching ->
             val finalPaddingTop = if (isSearching) 100.dp(fragment.context) else 0
-
             ValueAnimator
                 .ofInt(fragment.elementsView.paddingTop, finalPaddingTop)
                 .addUpdateListener<Int> {
-                    fragment.elementsView.setPadding(top = it)
+                    fragment.elementsView.updatePadding(top = it)
                 }
                 .doOnEnd {
                     if (isSearching && fragment.elementsView.computeVerticalScrollOffset() <= 3000)

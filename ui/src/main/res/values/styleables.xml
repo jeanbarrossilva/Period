@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="Row">
-        <attr name="spacing" />
+    <declare-styleable name="ChemicalElementBoxView">
+        <attr name="isExpanded" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="Column">
+        <attr name="spacing" />
+    </declare-styleable>
+
+    <declare-styleable name="Row">
         <attr name="spacing" />
     </declare-styleable>
 

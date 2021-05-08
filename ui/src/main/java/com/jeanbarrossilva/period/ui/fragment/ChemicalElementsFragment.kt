@@ -36,7 +36,7 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
         viewModel.run {
             showElements(this@ChemicalElementsFragment)
             listenToSortingOption(this@ChemicalElementsFragment)
-            bringElementsDownOnSearch(this@ChemicalElementsFragment)
+            freeUpSpaceForBoxOnSearchEvent(this@ChemicalElementsFragment)
             configElementsSearch(this@ChemicalElementsFragment)
         }
     }

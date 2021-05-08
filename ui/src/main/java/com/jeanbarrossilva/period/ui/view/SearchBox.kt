@@ -5,16 +5,24 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.FrameLayout
 import androidx.cardview.widget.CardView
 import androidx.core.content.res.getStringOrThrow
-import com.jeanbarrossilva.period.extensions.*
+import com.jeanbarrossilva.period.extensions.doOnTextChanged
 import com.jeanbarrossilva.period.extensions.number.dp
+import com.jeanbarrossilva.period.extensions.openKeyboard
+import com.jeanbarrossilva.period.extensions.view.matchParent
+import com.jeanbarrossilva.period.extensions.view.reveal
+import com.jeanbarrossilva.period.extensions.view.unreveal
+import com.jeanbarrossilva.period.extensions.view.wrapContent
+import com.jeanbarrossilva.period.extensions.withStyledAttributes
 import com.jeanbarrossilva.period.ui.R
 
 class SearchBox: CardView {
+    private lateinit var fieldLayout: FrameLayout
     private lateinit var field: EditText
+
     private var onQueryChangeListeners = mutableListOf<OnQueryChangeListener>()
 
     var opensKeyboardIfVisible = true
@@ -37,27 +45,40 @@ class SearchBox: CardView {
 
     private fun config() {
         elevation = 8.dp(context).toFloat()
-        setContentPadding(0, 10.dp(context), 0, 10.dp(context))
+        radius = 50.dp(context).toFloat()
+        setContentPadding(0, 5.dp(context), 0, 5.dp(context))
+        setOnClickListener {
+            field.requestFocus()
+        }
     }
 
     private fun initViews() {
+        fieldLayout = FrameLayout(context).apply {
+            matchParent()
+        }
+
         // For some reason, instantiating it as EditText(context, attrs, defStyleAttr) makes the View unusable.
         field = EditText(context).apply {
-            gravity = Gravity.CENTER
+            textAlignment = TEXT_ALIGNMENT_TEXT_START
             isSingleLine = true
             background = ColorDrawable(Color.TRANSPARENT)
-            layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            layoutParams = LayoutParams(width, height).apply {
+                gravity = Gravity.CENTER
+            }
+            wrapContent()
             setHint(R.string.SearchBox_hint)
             doOnTextChanged { text ->
-                onQueryChangeListeners.forEach {
-                    it.onQueryChange(text)
+                textAlignment = if (text.isEmpty()) TEXT_ALIGNMENT_TEXT_START else TEXT_ALIGNMENT_CENTER
+                onQueryChangeListeners.forEach { listener ->
+                    listener.onQueryChange(text)
                 }
             }
         }
     }
 
     private fun addViews() {
-        addView(field)
+        addView(fieldLayout)
+        fieldLayout.addView(field)
     }
 
     private fun getAttrs(attrs: AttributeSet?, defStyleAttr: Int) = context.withStyledAttributes(attrs, defStyleAttr, R.styleable.SearchBox) {
@@ -78,7 +99,7 @@ class SearchBox: CardView {
             super.setVisibility(visibility)
             reveal {
                 if (opensKeyboardIfVisible)
-                    field.showKeyboard()
+                    field.openKeyboard()
             }
         } else
             unreveal {

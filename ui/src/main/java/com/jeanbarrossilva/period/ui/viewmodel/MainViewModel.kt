@@ -1,8 +1,11 @@
 package com.jeanbarrossilva.period.ui.viewmodel
 
+import android.widget.EditText
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModel
+import com.jeanbarrossilva.period.extensions.closeKeyboard
+import com.jeanbarrossilva.period.extensions.viewgroup.searchFor
 import com.jeanbarrossilva.period.ui.R
 import com.jeanbarrossilva.period.ui.activity.MainActivity
 import com.jeanbarrossilva.period.ui.listener.OnSearchEventListener
@@ -19,10 +22,7 @@ class MainViewModel: ViewModel() {
     private fun configSearchMenuItems(activity: MainActivity) {
         activity.searchMenuItem.isVisible = !isSearching
         activity.exitSearchMenuItem.isVisible = isSearching
-        activity.exitSearchMenuItem.setOnMenuItemClickListener {
-            activity.onExitSearch()
-            true
-        }
+
     }
 
     private fun exitSearchOnKeyboardClosed(activity: MainActivity) = KeyboardVisibilityEvent.setEventListener(activity) { isOpen ->
@@ -49,9 +49,14 @@ class MainViewModel: ViewModel() {
         activity.onQueryChange(it)
     }
 
-    fun configSearchItem(activity: MainActivity) {
+    fun configSearchItems(activity: MainActivity) {
         activity.searchMenuItem.setOnMenuItemClickListener {
             activity.onStartSearch()
+            true
+        }
+        activity.exitSearchMenuItem.setOnMenuItemClickListener {
+            activity.searchBox.searchFor<EditText>()?.closeKeyboard()
+            activity.onExitSearch()
             true
         }
     }

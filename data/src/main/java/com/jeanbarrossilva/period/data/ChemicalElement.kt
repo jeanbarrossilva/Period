@@ -4,7 +4,7 @@ import androidx.annotation.IntRange
 import com.jeanbarrossilva.period.data.ChemicalElementKind.*
 import com.jeanbarrossilva.period.data.ChemicalElementState.*
 import com.jeanbarrossilva.period.data.ElectronDistribution.*
-import com.jeanbarrossilva.period.extensions.values
+import com.jeanbarrossilva.period.extensions.kclass.values
 
 @Suppress("Unused")
 sealed class ChemicalElement(

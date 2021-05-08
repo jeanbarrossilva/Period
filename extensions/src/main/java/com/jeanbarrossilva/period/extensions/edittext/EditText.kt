@@ -11,7 +11,12 @@ fun EditText.doOnTextChanged(action: (text: String) -> Unit) = doOnTextChanged {
     }
 }
 
-fun EditText.showKeyboard() {
+fun EditText.closeKeyboard() {
+    clearFocus()
+    context.getSystemService<InputMethodManager>()?.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY)
+}
+
+fun EditText.openKeyboard() {
     requestFocus()
     context.getSystemService<InputMethodManager>()?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
 }

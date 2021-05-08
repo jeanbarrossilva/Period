@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.period.extensions
+package com.jeanbarrossilva.period.extensions.animator
 
 import android.animation.Animator
 import androidx.core.animation.doOnEnd

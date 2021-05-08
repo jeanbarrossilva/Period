@@ -6,8 +6,6 @@ fun <T> T.doIf(condition: Boolean, action: T.() -> T) = if (condition) this.acti
 
 fun <T> T.doIf(condition: T.() -> Boolean, action: T.() -> T) = doIf(this.condition(), action)
 
-infix fun <T: Any> T.instanceof(kClass: KClass<*>) = this::class == kClass
-
 fun <T: Any> T.instanceof(vararg classes: KClass<*>) = classes.any {
-    this instanceof it
+    this::class == it
 }
