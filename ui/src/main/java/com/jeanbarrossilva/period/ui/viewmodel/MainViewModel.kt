@@ -1,13 +1,10 @@
 package com.jeanbarrossilva.period.ui.viewmodel
 
-import android.widget.EditText
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.jeanbarrossilva.period.extensions.activity.appcompatactivity.currentFragment
-import com.jeanbarrossilva.period.extensions.view.edittext.toggleKeyboard
-import com.jeanbarrossilva.period.extensions.view.viewgroup.searchFor
 import com.jeanbarrossilva.period.ui.R
 import com.jeanbarrossilva.period.ui.activity.MainActivity
 import com.jeanbarrossilva.period.ui.listener.OnSearchEventListener
@@ -50,7 +47,6 @@ class MainViewModel: ViewModel() {
     fun listenToSearchEvents(activity: MainActivity) {
         activity.addOnSearchEventListener(OnSearchEventListener { isSearching ->
             activity.searchBox.isVisible = isSearching
-            activity.searchBox.searchFor<EditText>()?.toggleKeyboard(shouldOpen = isSearching)
             configOnBackPressed(activity, isSearching)
             exitSearchOnKeyboardClosed(activity)
             configSearchMenuItems(activity, isSearching)

@@ -9,14 +9,15 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.cardview.widget.CardView
 import androidx.core.content.res.getStringOrThrow
-import com.jeanbarrossilva.period.extensions.view.edittext.doOnTextChanged
+import com.jeanbarrossilva.period.extensions.context.withStyledAttributes
 import com.jeanbarrossilva.period.extensions.number.dp
+import com.jeanbarrossilva.period.extensions.view.edittext.closeKeyboard
+import com.jeanbarrossilva.period.extensions.view.edittext.doOnTextChanged
 import com.jeanbarrossilva.period.extensions.view.edittext.openKeyboard
 import com.jeanbarrossilva.period.extensions.view.matchParent
 import com.jeanbarrossilva.period.extensions.view.reveal
 import com.jeanbarrossilva.period.extensions.view.unreveal
 import com.jeanbarrossilva.period.extensions.view.wrapContent
-import com.jeanbarrossilva.period.extensions.context.withStyledAttributes
 import com.jeanbarrossilva.period.ui.R
 
 class SearchBox: CardView {
@@ -104,6 +105,7 @@ class SearchBox: CardView {
         } else
             unreveal {
                 super.setVisibility(visibility)
+                field.closeKeyboard()
                 field.text.clear()
             }
     }
