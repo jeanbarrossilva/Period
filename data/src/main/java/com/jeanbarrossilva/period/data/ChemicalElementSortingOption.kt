@@ -6,7 +6,7 @@ import androidx.annotation.StringRes
 import androidx.core.content.edit
 import com.jeanbarrossilva.data.R
 import com.jeanbarrossilva.period.extensions.any.doIf
-import com.jeanbarrossilva.period.extensions.preferences
+import com.jeanbarrossilva.period.extensions.context.preferences
 import com.jeanbarrossilva.period.extensions.kclass.values
 
 @Suppress("Unused", "LongLogTag")

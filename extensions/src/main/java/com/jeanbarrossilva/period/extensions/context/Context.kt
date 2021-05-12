@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.period.extensions
+package com.jeanbarrossilva.period.extensions.context
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -8,14 +8,18 @@ import android.graphics.Color
 import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.AttrRes
 import androidx.annotation.StyleableRes
+import androidx.core.content.getSystemService
 import androidx.core.content.res.use
 import androidx.core.content.withStyledAttributes
 import androidx.preference.PreferenceManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.jeanbarrossilva.period.extensions.number.to
 
+val Context.inputMethodManager
+    get() = getSystemService<InputMethodManager>()
 val Context.isSystemInDarkTheme
     get() = resources.configuration.uiMode == Configuration.UI_MODE_NIGHT_YES
 val Context.preferences: SharedPreferences

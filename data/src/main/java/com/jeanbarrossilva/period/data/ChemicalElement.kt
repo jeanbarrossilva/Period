@@ -5,6 +5,7 @@ import com.jeanbarrossilva.period.data.ChemicalElementKind.*
 import com.jeanbarrossilva.period.data.ChemicalElementState.*
 import com.jeanbarrossilva.period.data.ElectronDistribution.*
 import com.jeanbarrossilva.period.extensions.kclass.values
+import java.io.Serializable
 
 @Suppress("Unused")
 sealed class ChemicalElement(
@@ -16,9 +17,13 @@ sealed class ChemicalElement(
     val state: ChemicalElementState,
     val period: ChemicalElementPeriod?,
     val group: ChemicalElementGroup?,
+    val electronegativity: ChemicalElementElectronegativity?,
     val electronConfiguration: ElectronConfiguration
-) {
+): Serializable {
     val color = kind.color
+    val protons = ChemicalElementProtons(atomicNumber.value)
+    val electrons = ChemicalElementElectrons(protons.value)
+    val neutrons = atomicMass - atomicNumber
 
     object Hydrogen:
         ChemicalElement(
@@ -30,6 +35,7 @@ sealed class ChemicalElement(
             state = Gas,
             ChemicalElementPeriod(1),
             ChemicalElementGroup(1),
+            ChemicalElementElectronegativity(2.2f),
             ElectronConfiguration(OneS(1))
         )
 
@@ -43,6 +49,7 @@ sealed class ChemicalElement(
             state = Gas,
             ChemicalElementPeriod(1),
             ChemicalElementGroup(18),
+            electronegativity = null,
             ElectronConfiguration(OneS(2))
         )
 
@@ -56,6 +63,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(2),
             ChemicalElementGroup(1),
+            ChemicalElementElectronegativity(0.98f),
             ElectronConfiguration(TwoS(1))
         )
 
@@ -69,6 +77,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(2),
             ChemicalElementGroup(2),
+            ChemicalElementElectronegativity(1.57f),
             ElectronConfiguration(TwoS(2))
         )
 
@@ -82,6 +91,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(2),
             ChemicalElementGroup(13),
+            ChemicalElementElectronegativity(2.04f),
             ElectronConfiguration(TwoS(2), TwoP(1))
         )
 
@@ -95,6 +105,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(2),
             ChemicalElementGroup(14),
+            ChemicalElementElectronegativity(2.55f),
             ElectronConfiguration(TwoS(2), TwoP(2))
         )
 
@@ -108,6 +119,7 @@ sealed class ChemicalElement(
             state = Gas,
             ChemicalElementPeriod(2),
             ChemicalElementGroup(15),
+            ChemicalElementElectronegativity(3.04f),
             ElectronConfiguration(TwoS(2), TwoP(3))
         )
 
@@ -121,6 +133,7 @@ sealed class ChemicalElement(
             state = Gas,
             ChemicalElementPeriod(2),
             ChemicalElementGroup(16),
+            ChemicalElementElectronegativity(3.44f),
             ElectronConfiguration(TwoS(2), TwoP(4))
         )
 
@@ -134,6 +147,7 @@ sealed class ChemicalElement(
             state = Gas,
             ChemicalElementPeriod(2),
             ChemicalElementGroup(17),
+            ChemicalElementElectronegativity(3.98f),
             ElectronConfiguration(TwoS(2), TwoP(5))
         )
 
@@ -147,6 +161,7 @@ sealed class ChemicalElement(
             state = Gas,
             ChemicalElementPeriod(2),
             ChemicalElementGroup(18),
+            electronegativity = null,
             ElectronConfiguration(TwoS(2), TwoP(6))
         )
 
@@ -160,6 +175,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(3),
             ChemicalElementGroup(1),
+            ChemicalElementElectronegativity(0.93f),
             ElectronConfiguration(ThreeS(1))
         )
 
@@ -173,6 +189,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(3),
             ChemicalElementGroup(2),
+            ChemicalElementElectronegativity(1.31f),
             ElectronConfiguration(ThreeS(2))
         )
 
@@ -186,6 +203,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(3),
             ChemicalElementGroup(13),
+            ChemicalElementElectronegativity(1.61f),
             ElectronConfiguration(ThreeS(2), ThreeP(1))
         )
 
@@ -199,6 +217,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(3),
             ChemicalElementGroup(14),
+            ChemicalElementElectronegativity(1.9f),
             ElectronConfiguration(ThreeS(2), ThreeP(2))
         )
 
@@ -212,6 +231,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(3),
             ChemicalElementGroup(15),
+            ChemicalElementElectronegativity(2.19f),
             ElectronConfiguration(ThreeS(2), ThreeP(3))
         )
 
@@ -225,6 +245,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(3),
             ChemicalElementGroup(16),
+            ChemicalElementElectronegativity(2.58f),
             ElectronConfiguration(ThreeS(2), ThreeP(4))
         )
 
@@ -238,6 +259,7 @@ sealed class ChemicalElement(
             state = Gas,
             ChemicalElementPeriod(1),
             ChemicalElementGroup(17),
+            ChemicalElementElectronegativity(3.16f),
             ElectronConfiguration(ThreeS(2), ThreeP(5))
         )
 
@@ -251,6 +273,7 @@ sealed class ChemicalElement(
             state = Gas,
             ChemicalElementPeriod(3),
             ChemicalElementGroup(18),
+            electronegativity = null,
             ElectronConfiguration(ThreeS(2), ThreeP(6))
         )
 
@@ -264,6 +287,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(1),
+            ChemicalElementElectronegativity(0.82f),
             ElectronConfiguration(FourS(1))
         )
 
@@ -277,6 +301,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(2),
+            ChemicalElementElectronegativity(1f),
             ElectronConfiguration(FourS(2))
         )
 
@@ -290,6 +315,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(3),
+            ChemicalElementElectronegativity(1.36f),
             ElectronConfiguration(ThreeD(1), FourS(2))
         )
 
@@ -303,6 +329,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(4),
+            ChemicalElementElectronegativity(1.54f),
             ElectronConfiguration(ThreeD(2), FourS(2))
         )
 
@@ -316,6 +343,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(5),
+            ChemicalElementElectronegativity(1.63f),
             ElectronConfiguration(ThreeD(3), FourS(2))
         )
 
@@ -329,6 +357,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(6),
+            ChemicalElementElectronegativity(1.66f),
             ElectronConfiguration(ThreeD(5), FourS(1))
         )
 
@@ -342,6 +371,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(7),
+            ChemicalElementElectronegativity(1.55f),
             ElectronConfiguration(ThreeD(5), FourS(2))
         )
 
@@ -355,6 +385,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(8),
+            ChemicalElementElectronegativity(1.83f),
             ElectronConfiguration(ThreeD(6), FourS(2))
         )
 
@@ -368,6 +399,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(9),
+            ChemicalElementElectronegativity(1.88f),
             ElectronConfiguration(ThreeD(7), FourS(2))
         )
 
@@ -381,6 +413,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(10),
+            ChemicalElementElectronegativity(1.91f),
             ElectronConfiguration(ThreeD(8), FourS(2))
         )
 
@@ -394,6 +427,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(11),
+            ChemicalElementElectronegativity(1.9f),
             ElectronConfiguration(ThreeD(10), FourS(1))
         )
 
@@ -407,6 +441,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(12),
+            ChemicalElementElectronegativity(1.65f),
             ElectronConfiguration(ThreeD(10), FourS(2))
         )
 
@@ -420,6 +455,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(13),
+            ChemicalElementElectronegativity(1.81f),
             ElectronConfiguration(ThreeD(10), FourS(2), FourP(1))
         )
 
@@ -433,6 +469,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(14),
+            ChemicalElementElectronegativity(2.01f),
             ElectronConfiguration(ThreeD(10), FourS(2), FourP(2))
         )
 
@@ -446,6 +483,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(15),
+            ChemicalElementElectronegativity(2.18f),
             ElectronConfiguration(ThreeD(10), FourS(2), FourP(3))
         )
 
@@ -459,6 +497,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(16),
+            ChemicalElementElectronegativity(2.55f),
             ElectronConfiguration(ThreeD(10), FourS(2), FourP(4))
         )
 
@@ -472,6 +511,7 @@ sealed class ChemicalElement(
             state = Liquid,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(17),
+            ChemicalElementElectronegativity(2.96f),
             ElectronConfiguration(ThreeD(10), FourS(2), FourP(5))
         )
 
@@ -485,6 +525,7 @@ sealed class ChemicalElement(
             state = Gas,
             ChemicalElementPeriod(4),
             ChemicalElementGroup(18),
+            electronegativity = null,
             ElectronConfiguration(ThreeD(10), FourS(2), FourP(6))
         )
 
@@ -498,6 +539,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(1),
+            ChemicalElementElectronegativity(0.82f),
             ElectronConfiguration(FiveS(1))
         )
 
@@ -511,6 +553,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(2),
+            ChemicalElementElectronegativity(0.95f),
             ElectronConfiguration(FiveS(2))
         )
 
@@ -524,6 +567,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(3),
+            ChemicalElementElectronegativity(1.22f),
             ElectronConfiguration(FourD(1), FiveS(2))
         )
 
@@ -537,6 +581,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(4),
+            ChemicalElementElectronegativity(1.33f),
             ElectronConfiguration(FourD(2), FiveS(2))
         )
 
@@ -550,6 +595,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(5),
+            ChemicalElementElectronegativity(1.6f),
             ElectronConfiguration(FourD(4), FiveS(1))
         )
 
@@ -563,6 +609,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(6),
+            ChemicalElementElectronegativity(2.16f),
             ElectronConfiguration(FourD(5), FiveS(1))
         )
 
@@ -576,6 +623,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(7),
+            ChemicalElementElectronegativity(1.9f),
             ElectronConfiguration(FourD(5), FiveS(2))
         )
 
@@ -589,6 +637,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(8),
+            ChemicalElementElectronegativity(2.2f),
             ElectronConfiguration(FourD(7), FiveS(1))
         )
 
@@ -602,6 +651,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(9),
+            ChemicalElementElectronegativity(2.28f),
             ElectronConfiguration(FourD(8), FiveS(1))
         )
 
@@ -615,6 +665,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(10),
+            ChemicalElementElectronegativity(2.2f),
             ElectronConfiguration(FourD(10))
         )
 
@@ -628,6 +679,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(11),
+            ChemicalElementElectronegativity(1.93f),
             ElectronConfiguration(FourD(10), FiveS(1))
         )
 
@@ -641,6 +693,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(12),
+            ChemicalElementElectronegativity(1.69f),
             ElectronConfiguration(FourD(10), FiveS(2))
         )
 
@@ -654,6 +707,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(13),
+            ChemicalElementElectronegativity(1.78f),
             ElectronConfiguration(FourD(10), FiveS(2), FiveP(1))
         )
 
@@ -667,6 +721,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(1),
             ChemicalElementGroup(14),
+            ChemicalElementElectronegativity(1.96f),
             ElectronConfiguration(FourD(10), FiveS(2), FiveP(2))
         )
 
@@ -680,6 +735,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(15),
+            ChemicalElementElectronegativity(2.05f),
             ElectronConfiguration(FourD(10), FiveS(2), FiveP(3))
         )
 
@@ -693,6 +749,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(16),
+            ChemicalElementElectronegativity(2.1f),
             ElectronConfiguration(FourD(10), FiveS(2), FiveP(4))
         )
 
@@ -706,6 +763,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(17),
+            ChemicalElementElectronegativity(2.66f),
             ElectronConfiguration(FourD(10), FiveS(2), FiveP(5))
         )
 
@@ -719,6 +777,7 @@ sealed class ChemicalElement(
             state = Gas,
             ChemicalElementPeriod(5),
             ChemicalElementGroup(18),
+            electronegativity = null,
             ElectronConfiguration(FourD(10), FiveS(2), FiveP(6))
         )
 
@@ -732,6 +791,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(1),
+            ChemicalElementElectronegativity(0.79f),
             ElectronConfiguration(SixS(1))
         )
 
@@ -745,6 +805,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(2),
+            ChemicalElementElectronegativity(0.89f),
             ElectronConfiguration(SixS(2))
         )
 
@@ -758,6 +819,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.1f),
             ElectronConfiguration(FiveD(1), SixS(2))
         )
 
@@ -771,6 +833,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.12f),
             ElectronConfiguration(FourF(1), FiveD(1), SixS(2))
         )
 
@@ -784,6 +847,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.13f),
             ElectronConfiguration(FourF(3), SixS(2))
         )
 
@@ -797,6 +861,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.14f),
             ElectronConfiguration(FourF(4), SixS(2))
         )
 
@@ -810,6 +875,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.13f),
             ElectronConfiguration(FourF(5), SixS(2))
         )
 
@@ -823,6 +889,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.17f),
             ElectronConfiguration(FourF(6), SixS(2))
         )
 
@@ -836,6 +903,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.2f),
             ElectronConfiguration(FourF(7), SixS(2))
         )
 
@@ -849,6 +917,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.2f),
             ElectronConfiguration(FourF(7), FiveD(1), SixS(2))
         )
 
@@ -862,6 +931,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.2f),
             ElectronConfiguration(FourF(9), SixS(2))
         )
 
@@ -875,6 +945,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.22f),
             ElectronConfiguration(FourF(10), SixS(2))
         )
 
@@ -888,6 +959,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.23f),
             ElectronConfiguration(FourF(11), SixS(2))
         )
 
@@ -901,6 +973,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.24f),
             ElectronConfiguration(FourF(12), SixS(2))
         )
 
@@ -914,6 +987,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.25f),
             ElectronConfiguration(FourF(13), SixS(2))
         )
 
@@ -927,6 +1001,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.1f),
             ElectronConfiguration(FourF(14), SixS(2))
         )
 
@@ -940,6 +1015,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(18),
+            ChemicalElementElectronegativity(1.27f),
             ElectronConfiguration(FourF(14), FiveD(1), SixS(2))
         )
 
@@ -953,6 +1029,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(4),
+            ChemicalElementElectronegativity(1.3f),
             ElectronConfiguration(FourF(14), FiveD(2), SixS(2))
         )
 
@@ -966,6 +1043,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(5),
+            ChemicalElementElectronegativity(1.5f),
             ElectronConfiguration(FourF(14), FiveD(3), SixS(2))
         )
 
@@ -979,6 +1057,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(6),
+            ChemicalElementElectronegativity(2.36f),
             ElectronConfiguration(FourF(14), FiveD(4), SixS(2))
         )
 
@@ -992,6 +1071,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(7),
+            ChemicalElementElectronegativity(1.9f),
             ElectronConfiguration(FourF(14), FiveD(5), SixS(2))
         )
 
@@ -1005,6 +1085,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(8),
+            ChemicalElementElectronegativity(2.2f),
             ElectronConfiguration(FourF(14), FiveD(6), SixS(2))
         )
 
@@ -1018,6 +1099,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(9),
+            ChemicalElementElectronegativity(2.2f),
             ElectronConfiguration(FourF(14), FiveD(7), SixS(2))
         )
 
@@ -1031,6 +1113,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(10),
+            ChemicalElementElectronegativity(2.28f),
             ElectronConfiguration(FourF(14), FiveD(9), SixS(1))
         )
 
@@ -1044,6 +1127,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(11),
+            ChemicalElementElectronegativity(2.54f),
             ElectronConfiguration(FourF(14), FiveD(10), SixS(1))
         )
 
@@ -1057,6 +1141,7 @@ sealed class ChemicalElement(
             state = Liquid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(12),
+            ChemicalElementElectronegativity(2f),
             ElectronConfiguration(FourF(14), FiveD(10), SixS(2))
         )
 
@@ -1070,6 +1155,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(13),
+            ChemicalElementElectronegativity(2.04f),
             ElectronConfiguration(FourF(14), FiveD(10), SixS(2), SixP(1))
         )
 
@@ -1083,6 +1169,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(14),
+            ChemicalElementElectronegativity(2.33f),
             ElectronConfiguration(FourF(14), FiveD(10), SixS(2), SixP(2))
         )
 
@@ -1096,6 +1183,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(15),
+            ChemicalElementElectronegativity(2.02f),
             ElectronConfiguration(FourF(14), FiveD(10), SixS(2), SixP(3))
         )
 
@@ -1109,6 +1197,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(16),
+            ChemicalElementElectronegativity(2f),
             ElectronConfiguration(FourF(14), FiveD(10), SixS(2), SixP(4))
         )
 
@@ -1122,6 +1211,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(17),
+            ChemicalElementElectronegativity(2.2f),
             ElectronConfiguration(FourF(14), FiveD(10), SixS(2), SixP(5))
         )
 
@@ -1135,6 +1225,7 @@ sealed class ChemicalElement(
             state = Gas,
             ChemicalElementPeriod(6),
             ChemicalElementGroup(18),
+            electronegativity = null,
             ElectronConfiguration(FourF(14), FiveD(10), SixS(2), SixP(6))
         )
 
@@ -1148,6 +1239,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(1),
+            ChemicalElementElectronegativity(0.7f),
             ElectronConfiguration(SevenS(1))
         )
 
@@ -1161,6 +1253,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(2),
+            ChemicalElementElectronegativity(0.9f),
             ElectronConfiguration(SevenS(2))
         )
 
@@ -1174,6 +1267,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.1f),
             ElectronConfiguration(SixD(1), SevenS(2))
         )
 
@@ -1187,6 +1281,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.3f),
             ElectronConfiguration(SixD(2), SevenS(2))
         )
 
@@ -1200,6 +1295,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.5f),
             ElectronConfiguration(FiveF(2), SixD(1), SevenS(2))
         )
 
@@ -1213,6 +1309,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.38f),
             ElectronConfiguration(FiveF(3), SixD(1), SevenS(2))
         )
 
@@ -1226,6 +1323,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.36f),
             ElectronConfiguration(FiveF(4), SixD(1), SevenS(2))
         )
 
@@ -1239,6 +1337,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.28f),
             ElectronConfiguration(FiveF(6), SevenS(2))
         )
 
@@ -1252,6 +1351,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.3f),
             ElectronConfiguration(FiveF(7), SevenS(2))
         )
 
@@ -1265,6 +1365,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.3f),
             ElectronConfiguration(FiveF(7), SixD(1), SevenS(2))
         )
 
@@ -1278,6 +1379,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.3f),
             ElectronConfiguration(FiveF(9), SevenS(2))
         )
 
@@ -1291,6 +1393,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.3f),
             ElectronConfiguration(FiveF(10), SevenS(2))
         )
 
@@ -1304,6 +1407,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.3f),
             ElectronConfiguration(FiveF(11), SevenS(2))
         )
 
@@ -1317,6 +1421,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.3f),
             ElectronConfiguration(FiveF(12), SevenS(2))
         )
 
@@ -1330,6 +1435,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.3f),
             ElectronConfiguration(FiveF(13), SevenS(2))
         )
 
@@ -1343,6 +1449,7 @@ sealed class ChemicalElement(
             state = Solid,
             period = null,
             group = null,
+            ChemicalElementElectronegativity(1.3f),
             ElectronConfiguration(FiveF(14), SevenS(2))
         )
 
@@ -1356,6 +1463,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(18),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SevenS(2), SevenP(1))
         )
 
@@ -1369,6 +1477,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(4),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(2), SevenS(2))
         )
 
@@ -1382,6 +1491,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(5),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(3), SevenS(2))
         )
 
@@ -1395,6 +1505,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(6),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(4), SevenS(2))
         )
 
@@ -1408,6 +1519,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(7),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(5), SevenS(2))
         )
 
@@ -1421,6 +1533,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(8),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(6), SevenS(2))
         )
 
@@ -1434,6 +1547,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(9),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(7), SevenS(2))
         )
 
@@ -1447,6 +1561,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(10),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(9), SevenS(1))
         )
 
@@ -1460,6 +1575,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(11),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(10), SevenS(1))
         )
 
@@ -1473,6 +1589,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(12),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(10), SevenS(2))
         )
 
@@ -1486,6 +1603,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(13),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(10), SevenS(2), SevenP(1))
         )
 
@@ -1499,6 +1617,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(14),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(10), SevenS(2), SevenP(2))
         )
 
@@ -1512,6 +1631,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(15),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(10), SevenS(2), SevenP(3))
         )
 
@@ -1525,6 +1645,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(16),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(10), SevenS(2), SevenP(4))
         )
 
@@ -1538,6 +1659,7 @@ sealed class ChemicalElement(
             state = Solid,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(17),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(10), SevenS(2), SevenP(5))
         )
 
@@ -1551,6 +1673,7 @@ sealed class ChemicalElement(
             state = Gas,
             ChemicalElementPeriod(7),
             ChemicalElementGroup(18),
+            electronegativity = null,
             ElectronConfiguration(FiveF(14), SixD(10), SevenS(2), SevenP(6))
         )
 

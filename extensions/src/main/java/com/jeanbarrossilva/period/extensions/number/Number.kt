@@ -2,7 +2,7 @@ package com.jeanbarrossilva.period.extensions.number
 
 import android.content.Context
 import android.util.TypedValue
-import com.jeanbarrossilva.period.extensions.convert
+import com.jeanbarrossilva.period.extensions.context.convert
 import kotlin.reflect.KClass
 
 @Suppress("UNCHECKED_CAST")
