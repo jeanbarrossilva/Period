@@ -30,7 +30,6 @@ class MainActivity: AppCompatActivity(), OnSearchEventListener, SearchBox.OnQuer
 		setContentView(R.layout.activity_main)
 		assignViews()
 		viewModel.run {
-			configOnBackPressed(this@MainActivity)
 			configSearchItems(this@MainActivity)
 			listenToSearchEvents(this@MainActivity)
 			listenToQueryChange(this@MainActivity)

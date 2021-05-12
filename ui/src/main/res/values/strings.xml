@@ -10,5 +10,16 @@
 
     <string name="content_description_fab">Sort</string>
 
+    <string name="ChemicalElementsFragment">Elements</string>
+    <string name="ChemicalElementDetailsFragment">Details</string>
+
     <string name="MaterialDialog_title_sort">Sort by…</string>
+
+    <string name="ChemicalElementDetailsView_kind">Kind</string>
+    <string name="ChemicalElementDetailsView_group">Group</string>
+    <string name="ChemicalElementDetailsView_period">Period</string>
+    <string name="ChemicalElementDetailsView_protons">Protons</string>
+    <string name="ChemicalElementDetailsView_neutrons">Neutrons</string>
+    <string name="ChemicalElementDetailsView_electrons">Electrons</string>
+    <string name="ChemicalElementDetailsView_electronegativity">Electronegativity</string>
 </resources>

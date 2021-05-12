@@ -4,8 +4,10 @@ import android.widget.EditText
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModel
-import com.jeanbarrossilva.period.extensions.closeKeyboard
-import com.jeanbarrossilva.period.extensions.viewgroup.searchFor
+import androidx.navigation.fragment.findNavController
+import com.jeanbarrossilva.period.extensions.activity.appcompatactivity.currentFragment
+import com.jeanbarrossilva.period.extensions.view.edittext.toggleKeyboard
+import com.jeanbarrossilva.period.extensions.view.viewgroup.searchFor
 import com.jeanbarrossilva.period.ui.R
 import com.jeanbarrossilva.period.ui.activity.MainActivity
 import com.jeanbarrossilva.period.ui.listener.OnSearchEventListener
@@ -17,31 +19,41 @@ class MainViewModel: ViewModel() {
     private val MainActivity.exitSearchMenuItem
         get() = toolbar.menu.findItem(R.id.menu_item_exit_search)
 
-    private var isSearching = false
+    private var isListeningToKeyboardVisibility = false
 
-    private fun configSearchMenuItems(activity: MainActivity) {
+    private fun configOnBackPressed(activity: MainActivity, isSearching: Boolean) {
+        val shouldAddCallback = !activity.onBackPressedDispatcher.hasEnabledCallbacks()
+        if (shouldAddCallback)
+            activity.onBackPressedDispatcher.addCallback(activity) {
+                if (isSearching) activity.onExitSearch() else activity.currentFragment?.findNavController()?.popBackStack()
+            }
+    }
+
+    private fun configSearchMenuItems(activity: MainActivity, isSearching: Boolean) {
         activity.searchMenuItem.isVisible = !isSearching
         activity.exitSearchMenuItem.isVisible = isSearching
-
     }
 
-    private fun exitSearchOnKeyboardClosed(activity: MainActivity) = KeyboardVisibilityEvent.setEventListener(activity) { isOpen ->
-        if (!isOpen)
-            activity.onExitSearch()
-    }
-
-    fun configOnBackPressed(activity: MainActivity) {
-        activity.onBackPressedDispatcher.addCallback(activity) {
-            if (isSearching) activity.onExitSearch() else activity.finishAffinity()
+    private fun exitSearchOnKeyboardClosed(activity: MainActivity) {
+        KeyboardVisibilityEvent.registerEventListener(activity) { isOpen ->
+            isListeningToKeyboardVisibility = true
+            if (!isOpen)
+                activity.onExitSearch()
+        }.also {
+            if (isListeningToKeyboardVisibility) {
+                it.unregister()
+                isListeningToKeyboardVisibility = false
+            }
         }
     }
 
     fun listenToSearchEvents(activity: MainActivity) {
-        exitSearchOnKeyboardClosed(activity)
         activity.addOnSearchEventListener(OnSearchEventListener { isSearching ->
-            this.isSearching = isSearching
             activity.searchBox.isVisible = isSearching
-            configSearchMenuItems(activity)
+            activity.searchBox.searchFor<EditText>()?.toggleKeyboard(shouldOpen = isSearching)
+            configOnBackPressed(activity, isSearching)
+            exitSearchOnKeyboardClosed(activity)
+            configSearchMenuItems(activity, isSearching)
         })
     }
 
@@ -55,7 +67,6 @@ class MainViewModel: ViewModel() {
             true
         }
         activity.exitSearchMenuItem.setOnMenuItemClickListener {
-            activity.searchBox.searchFor<EditText>()?.closeKeyboard()
             activity.onExitSearch()
             true
         }

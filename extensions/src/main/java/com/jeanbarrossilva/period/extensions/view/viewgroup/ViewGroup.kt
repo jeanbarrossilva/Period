@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.period.extensions.viewgroup
+package com.jeanbarrossilva.period.extensions.view.viewgroup
 
 import android.view.View
 import android.view.ViewGroup

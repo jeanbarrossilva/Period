@@ -3,12 +3,13 @@ package com.jeanbarrossilva.period.ui.viewmodel
 import android.animation.ValueAnimator
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.jeanbarrossilva.period.data.ChemicalElementSortingOption
 import com.jeanbarrossilva.period.extensions.addUpdateListener
 import com.jeanbarrossilva.period.extensions.animator.doOnEnd
-import com.jeanbarrossilva.period.extensions.dialog
+import com.jeanbarrossilva.period.extensions.context.dialog
 import com.jeanbarrossilva.period.extensions.filter.clear
 import com.jeanbarrossilva.period.extensions.fragment.withFab
 import com.jeanbarrossilva.period.extensions.number.dp
@@ -17,6 +18,7 @@ import com.jeanbarrossilva.period.ui.R
 import com.jeanbarrossilva.period.ui.activity.MainActivity
 import com.jeanbarrossilva.period.ui.adapter.ChemicalElementAdapter
 import com.jeanbarrossilva.period.ui.fragment.ChemicalElementsFragment
+import com.jeanbarrossilva.period.ui.fragment.ChemicalElementsFragmentDirections
 import com.jeanbarrossilva.period.ui.listener.OnSearchEventListener
 
 class ChemicalElementsViewModel(fragment: ChemicalElementsFragment): ViewModel() {
@@ -51,7 +53,9 @@ class ChemicalElementsViewModel(fragment: ChemicalElementsFragment): ViewModel()
 
     fun listenToSortingOption(fragment: ChemicalElementsFragment) = sortingOption.observe(fragment) { sortingOption ->
         ChemicalElementSortingOption.prefer(fragment.requireContext(), sortingOption)
-        elementAdapter.value = ChemicalElementAdapter(sortingOption) {
+        elementAdapter.value = ChemicalElementAdapter(sortingOption) { element ->
+            (fragment.activity as? MainActivity)?.onExitSearch()
+            fragment.findNavController().navigate(ChemicalElementsFragmentDirections.toDetailsOf(element))
         }
     }
 
