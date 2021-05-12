@@ -30,7 +30,7 @@ class MainActivity: AppCompatActivity(), OnSearchEventListener, SearchBox.OnQuer
 		setContentView(R.layout.activity_main)
 		assignViews()
 		viewModel.run {
-			configSearchItems(this@MainActivity)
+			configSearchItem(this@MainActivity)
 			listenToSearchEvents(this@MainActivity)
 			listenToQueryChange(this@MainActivity)
 		}
@@ -38,7 +38,7 @@ class MainActivity: AppCompatActivity(), OnSearchEventListener, SearchBox.OnQuer
 
 	override fun onOptionsItemSelected(item: MenuItem) = true.also {
 		if (item.itemId == R.id.menu_item_search)
-			viewModel.configSearchItems(this)
+			viewModel.configSearchItem(this)
 	}
 
 	override fun onStartSearch() = onSearchEventListeners.forEach {
