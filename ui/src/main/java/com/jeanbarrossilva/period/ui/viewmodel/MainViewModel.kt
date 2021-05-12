@@ -13,8 +13,6 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 class MainViewModel: ViewModel() {
     private val MainActivity.searchMenuItem
         get() = toolbar.menu.findItem(R.id.menu_item_search)
-    private val MainActivity.exitSearchMenuItem
-        get() = toolbar.menu.findItem(R.id.menu_item_exit_search)
 
     private var isListeningToKeyboardVisibility = false
 
@@ -28,7 +26,6 @@ class MainViewModel: ViewModel() {
 
     private fun configSearchMenuItems(activity: MainActivity, isSearching: Boolean) {
         activity.searchMenuItem.isVisible = !isSearching
-        activity.exitSearchMenuItem.isVisible = isSearching
     }
 
     private fun exitSearchOnKeyboardClosed(activity: MainActivity) {
@@ -57,13 +54,9 @@ class MainViewModel: ViewModel() {
         activity.onQueryChange(it)
     }
 
-    fun configSearchItems(activity: MainActivity) {
+    fun configSearchItem(activity: MainActivity) {
         activity.searchMenuItem.setOnMenuItemClickListener {
             activity.onStartSearch()
-            true
-        }
-        activity.exitSearchMenuItem.setOnMenuItemClickListener {
-            activity.onExitSearch()
             true
         }
     }
