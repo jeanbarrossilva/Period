@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.period.extensions
+package com.jeanbarrossilva.period.extensions.valueanimator
 
 import android.animation.ValueAnimator
 

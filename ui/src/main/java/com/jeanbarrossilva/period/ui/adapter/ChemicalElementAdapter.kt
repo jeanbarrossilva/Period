@@ -18,7 +18,7 @@ import com.jeanbarrossilva.period.ui.R
 
 class ChemicalElementAdapter(private val sortingOption: ChemicalElementSortingOption<*>, private val onClick: (ChemicalElement) -> Unit):
     RecyclerView.Adapter<ChemicalElementAdapter.ChemicalElementViewHolder>(), Filterable {
-    var elements = sortingOption.getElements()
+    private var elements = sortingOption.getElements()
 
     inner class ChemicalElementViewHolder(view: View): RecyclerView.ViewHolder(view) {
         private val atomicNumberView = view.findViewById<TextView>(R.id.atomic_number_view)

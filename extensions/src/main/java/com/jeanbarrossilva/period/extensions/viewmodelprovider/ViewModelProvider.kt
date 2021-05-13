@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.period.extensions
+package com.jeanbarrossilva.period.extensions.viewmodelprovider
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
