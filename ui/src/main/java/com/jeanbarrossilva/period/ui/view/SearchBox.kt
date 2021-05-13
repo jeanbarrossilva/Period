@@ -21,10 +21,10 @@ import com.jeanbarrossilva.period.extensions.view.wrapContent
 import com.jeanbarrossilva.period.ui.R
 
 class SearchBox: CardView {
+    private var onQueryChangeListeners = mutableListOf<OnQueryChangeListener>()
+
     private lateinit var fieldLayout: FrameLayout
     private lateinit var field: EditText
-
-    private var onQueryChangeListeners = mutableListOf<OnQueryChangeListener>()
 
     var opensKeyboardIfVisible = true
 
@@ -96,18 +96,22 @@ class SearchBox: CardView {
 
     override fun setVisibility(visibility: Int) {
         val willBeVisible = visibility == VISIBLE
-        if (willBeVisible) {
-            super.setVisibility(visibility)
-            reveal {
-                if (opensKeyboardIfVisible)
-                    field.openKeyboard()
-            }
-        } else
-            unreveal {
-                super.setVisibility(visibility)
-                field.closeKeyboard()
-                field.text.clear()
-            }
+        when {
+            isAttachedToWindow ->
+                if (willBeVisible) {
+                    super.setVisibility(visibility)
+                    reveal {
+                        if (opensKeyboardIfVisible)
+                            field.openKeyboard()
+                    }
+                } else
+                    unreveal {
+                        super.setVisibility(visibility)
+                        field.closeKeyboard()
+                        field.text.clear()
+                    }
+            else -> super.setVisibility(visibility)
+        }
     }
 
     fun getQuery() = field.text?.toString() ?: ""
