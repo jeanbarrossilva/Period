@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.jeanbarrossilva.period.extensions.activity.toolbar
 import com.jeanbarrossilva.period.ui.R
 
 class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_element_details) {
@@ -43,6 +44,10 @@ class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_elemen
         electronegativityView = view.findViewById(R.id.electronegativity_view)
     }
 
+    private fun configToolbar() {
+        activity?.toolbar?.menu?.clear()
+    }
+
     private fun showDetails() {
         atomicNumberView.text = element.atomicNumber.representation
         symbolView.text = element.symbol.representation
@@ -66,5 +71,6 @@ class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_elemen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showDetails()
+        configToolbar()
     }
 }
