@@ -8,12 +8,12 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.jeanbarrossilva.period.model.ChemicalElement
-import com.jeanbarrossilva.period.model.ChemicalElementAtomicNumber
-import com.jeanbarrossilva.period.model.ChemicalElementName
-import com.jeanbarrossilva.period.model.ChemicalElementSortingOption
 import com.jeanbarrossilva.period.extensions.any.doIf
 import com.jeanbarrossilva.period.extensions.any.instanceof
+import com.jeanbarrossilva.period.model.ChemicalElement
+import com.jeanbarrossilva.period.model.ChemicalElementInteger
+import com.jeanbarrossilva.period.model.ChemicalElementName
+import com.jeanbarrossilva.period.model.ChemicalElementSortingOption
 import com.jeanbarrossilva.period.ui.R
 
 class ChemicalElementAdapter(private val sortingOption: ChemicalElementSortingOption<*>, private val onClick: (ChemicalElement) -> Unit):
@@ -33,8 +33,8 @@ class ChemicalElementAdapter(private val sortingOption: ChemicalElementSortingOp
             atomicNumberView.text = "${element.atomicNumber.value}"
             symbolView.text = element.symbol.value
             nameView.text = element.name.value
-            additionalInfoView.isVisible = !sortingOption.equivalent(element).instanceof(ChemicalElementName::class, ChemicalElementAtomicNumber::class)
-            additionalInfoView.text = sortingOption.equivalent(element).representation
+            additionalInfoView.isVisible = !sortingOption.equivalent(element).instanceof(ChemicalElementName::class, ChemicalElementInteger.AtomicNumber::class)
+            additionalInfoView.text = sortingOption.equivalent(element).value.toString()
         }
     }
 
@@ -52,7 +52,7 @@ class ChemicalElementAdapter(private val sortingOption: ChemicalElementSortingOp
             constraint?.let {
                 values = sortingOption.getElements().doIf(it.isNotBlank()) {
                     filterIndexed { _, element ->
-                        it in element.name || it in element.symbol
+                        it in element.name.value || it in element.symbol.value
                     }
                 }
             }
