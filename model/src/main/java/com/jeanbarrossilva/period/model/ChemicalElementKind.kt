@@ -3,9 +3,7 @@ package com.jeanbarrossilva.period.model
 import android.graphics.Color
 import androidx.annotation.ColorInt
 
-sealed class ChemicalElementKind(val name: String, @ColorInt val color: Int): Representable {
-    override val representation = name
-
+sealed class ChemicalElementKind(val name: String, @ColorInt val color: Int): ChemicalElementProperty<String>(name) {
     object Nonmetal: ChemicalElementKind("Nonmetal", Color.parseColor("#B4DC96"))
 
     object AlkaliMetal: ChemicalElementKind("Alkali metal", Color.parseColor("#149B5F"))

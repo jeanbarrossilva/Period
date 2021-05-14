@@ -10,15 +10,15 @@ import com.jeanbarrossilva.period.extensions.context.preferences
 import com.jeanbarrossilva.period.extensions.kclass.values
 
 @Suppress("Unused", "LongLogTag")
-sealed class ChemicalElementSortingOption<R: Representable>(
+sealed class ChemicalElementSortingOption<P: ChemicalElementProperty<*>>(
     val title: String,
-    val equivalent: (ChemicalElement) -> R,
+    val equivalent: (ChemicalElement) -> P,
     private val elements: List<ChemicalElement>.() -> List<ChemicalElement>
 ) {
-    constructor(context: Context, representation: (ChemicalElement) -> R, @StringRes titleRes: Int, elements: List<ChemicalElement>.() -> List<ChemicalElement>):
+    constructor(context: Context, representation: (ChemicalElement) -> P, @StringRes titleRes: Int, elements: List<ChemicalElement>.() -> List<ChemicalElement>):
         this(context.getString(titleRes), representation, elements)
 
-    data class AtomicNumber(private val context: Context): ChemicalElementSortingOption<ChemicalElementAtomicNumber>(
+    data class AtomicNumber(private val context: Context): ChemicalElementSortingOption<ChemicalElementInteger.AtomicNumber>(
         context,
         {
             it.atomicNumber
@@ -30,7 +30,7 @@ sealed class ChemicalElementSortingOption<R: Representable>(
         }
     })
 
-    data class AtomicMass(private val context: Context): ChemicalElementSortingOption<ChemicalElementAtomicMass>(
+    data class AtomicMass(private val context: Context): ChemicalElementSortingOption<ChemicalElementFloat.AtomicMass>(
         context,
         {
             it.atomicMass
