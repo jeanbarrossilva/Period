@@ -7,10 +7,8 @@ import androidx.navigation.findNavController
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.jeanbarrossilva.period.ui.R
 import com.jeanbarrossilva.period.ui.activity.core.SearchActivity
-import com.jeanbarrossilva.period.ui.listener.OnSearchEventListener
-import com.jeanbarrossilva.period.ui.view.SearchBox
 
-class MainActivity: SearchActivity(), OnSearchEventListener, SearchBox.OnQueryChangeListener {
+class MainActivity: SearchActivity() {
 	private lateinit var navController: NavController
 	private lateinit var toolbar: BottomAppBar
 
@@ -26,7 +24,13 @@ class MainActivity: SearchActivity(), OnSearchEventListener, SearchBox.OnQueryCh
 	private fun configToolbar() {
 		navController.addOnDestinationChangedListener { _, destination, _ ->
 			when (destination.id) {
-				R.id.chemicalElementsFragment -> toolbar.inflateMenu(R.menu.menu_main_toolbar)
+				R.id.chemicalElementsFragment -> {
+					toolbar.inflateMenu(R.menu.menu_main_toolbar)
+					searchMenuItem.setOnMenuItemClickListener {
+						onStartSearch()
+						true
+					}
+				}
 				R.id.chemicalElementDetailsFragment -> toolbar.menu?.clear()
 			}
 		}
