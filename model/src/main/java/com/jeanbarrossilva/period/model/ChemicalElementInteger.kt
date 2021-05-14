@@ -2,7 +2,7 @@ package com.jeanbarrossilva.period.model
 
 import androidx.annotation.IntRange
 
-sealed class ChemicalElementInteger(override val value: Int): ChemicalElementNumber(value) {
+sealed class ChemicalElementInteger(override val value: Int): ChemicalElementProperty<Int>(value) {
     data class AtomicNumber(override val value: Int): ChemicalElementInteger(value)
 
     data class Electrons(override val value: Int): ChemicalElementInteger(value)
