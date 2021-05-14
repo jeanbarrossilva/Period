@@ -49,18 +49,18 @@ class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_elemen
     }
 
     private fun showDetails() {
-        atomicNumberView.text = element.atomicNumber.representation
-        symbolView.text = element.symbol.representation
-        atomicMassView.text = element.atomicMass.representation
-        nameView.text = element.name.representation
-        electronConfigurationView.text = element.electronConfiguration.representation
-        kindView.text = element.kind.representation
-        groupView.text = element.group?.representation
-        periodView.text = element.period?.representation
-        protonsView.text = element.protons.representation
-        neutronsView.text = element.neutrons.representation
-        electronsView.text = element.electrons.representation
-        electronegativityView.text = element.electronegativity?.representation.toString()
+        atomicNumberView.text = element.atomicNumber.value.toString()
+        symbolView.text = element.symbol.value
+        atomicMassView.text = element.atomicMass.value.toString()
+        nameView.text = element.name.value
+        electronConfigurationView.text = element.electronConfiguration.value
+        kindView.text = element.kind.name
+        groupView.text = element.group?.value.toString()
+        periodView.text = element.period?.value.toString()
+        protonsView.text = element.protons.value.toString()
+        neutronsView.text = element.neutrons.value.toString()
+        electronsView.text = element.electrons.toString()
+        electronegativityView.text = element.electronegativity?.value.toString()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
