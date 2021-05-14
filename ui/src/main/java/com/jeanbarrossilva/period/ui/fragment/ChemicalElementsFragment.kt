@@ -12,8 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
-import com.jeanbarrossilva.period.data.ChemicalElement
-import com.jeanbarrossilva.period.data.ChemicalElementSortingOption
+import com.jeanbarrossilva.period.model.ChemicalElement
+import com.jeanbarrossilva.period.model.ChemicalElementSortingOption
 import com.jeanbarrossilva.period.extensions.animator.doOnEnd
 import com.jeanbarrossilva.period.extensions.context.dialog
 import com.jeanbarrossilva.period.extensions.filter.clear

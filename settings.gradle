@@ -1,5 +1,5 @@
 rootProject.name = "Period"
-include ':data'
+include ':model'
 include ':extensions'
 include ':ui'
 include ':app'

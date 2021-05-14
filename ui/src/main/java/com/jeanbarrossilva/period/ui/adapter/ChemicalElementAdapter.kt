@@ -8,10 +8,10 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.jeanbarrossilva.period.data.ChemicalElement
-import com.jeanbarrossilva.period.data.ChemicalElementAtomicNumber
-import com.jeanbarrossilva.period.data.ChemicalElementName
-import com.jeanbarrossilva.period.data.ChemicalElementSortingOption
+import com.jeanbarrossilva.period.model.ChemicalElement
+import com.jeanbarrossilva.period.model.ChemicalElementAtomicNumber
+import com.jeanbarrossilva.period.model.ChemicalElementName
+import com.jeanbarrossilva.period.model.ChemicalElementSortingOption
 import com.jeanbarrossilva.period.extensions.any.doIf
 import com.jeanbarrossilva.period.extensions.any.instanceof
 import com.jeanbarrossilva.period.ui.R

@@ -30,7 +30,7 @@
 
         <argument
             android:name="element"
-            app:argType="com.jeanbarrossilva.period.data.ChemicalElement" />
+            app:argType="com.jeanbarrossilva.period.model.ChemicalElement" />
 
     </fragment>
 

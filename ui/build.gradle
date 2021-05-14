@@ -37,7 +37,7 @@ android {
 
 dependencies {
     implementation project(':extensions')
-    implementation project(':data')
+    implementation project(':model')
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
