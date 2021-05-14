@@ -1,16 +1,16 @@
 package com.jeanbarrossilva.period.ui.activity.core
 
-import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
-import androidx.navigation.fragment.findNavController
-import com.jeanbarrossilva.period.extensions.activity.appcompatactivity.currentFragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.jeanbarrossilva.period.extensions.activity.view
 import com.jeanbarrossilva.period.extensions.number.dp
+import com.jeanbarrossilva.period.ui.R
 import com.jeanbarrossilva.period.ui.listener.OnSearchEventListener
 import com.jeanbarrossilva.period.ui.view.SearchBox
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
@@ -18,8 +18,10 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 open class SearchActivity: AppCompatActivity(), OnSearchEventListener, SearchBox.OnQueryChangeListener {
     private var onSearchEventListeners = mutableListOf<OnSearchEventListener>()
     private var onQueryChangeListeners = mutableListOf<SearchBox.OnQueryChangeListener>()
+    private var shouldExitSearchOnBackPressed = false
     private var isListeningToKeyboardVisibility = false
 
+    private lateinit var navController: NavController
     private lateinit var searchBox: SearchBox
 
     private fun checkIfParentViewIsAppropriate() {
@@ -28,6 +30,7 @@ open class SearchActivity: AppCompatActivity(), OnSearchEventListener, SearchBox
     }
 
     private fun assignViews() {
+        navController = findNavController(R.id.container)
         searchBox = SearchBox(this).apply {
             isVisible = false
             layoutParams = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
@@ -39,29 +42,24 @@ open class SearchActivity: AppCompatActivity(), OnSearchEventListener, SearchBox
         }
     }
 
-    private fun configOnBackPressed(isSearching: Boolean) {
-        if (!onBackPressedDispatcher.hasEnabledCallbacks())
-            onBackPressedDispatcher.addCallback(this) {
-                if (isSearching) onExitSearch() else currentFragment?.findNavController()?.popBackStack()
-            }
-    }
-
     private fun exitSearchOnKeyboardClosed() {
         KeyboardVisibilityEvent.registerEventListener(this) { isOpen ->
             isListeningToKeyboardVisibility = true
             if (!isOpen)
                 onExitSearch()
-        }.also {
+        }.also { listener ->
             if (isListeningToKeyboardVisibility) {
-                it.unregister()
+                listener.unregister()
                 isListeningToKeyboardVisibility = false
             }
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
+        checkIfParentViewIsAppropriate()
         assignViews()
+        onAddSearchBox()
         addOnSearchEventListener(OnSearchEventListener { isSearching ->
             onPrimarySearchEventListening(isSearching)
         })
@@ -70,10 +68,8 @@ open class SearchActivity: AppCompatActivity(), OnSearchEventListener, SearchBox
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        checkIfParentViewIsAppropriate()
-        onAddSearchBox()
+    override fun onBackPressed() {
+        if (shouldExitSearchOnBackPressed) onExitSearch() else super.onBackPressed()
     }
 
     override fun onStartSearch() {
@@ -99,9 +95,10 @@ open class SearchActivity: AppCompatActivity(), OnSearchEventListener, SearchBox
     }
 
     open fun onPrimarySearchEventListening(isSearching: Boolean) {
+        shouldExitSearchOnBackPressed = isSearching
         searchBox.isVisible = isSearching
-        configOnBackPressed(isSearching)
         exitSearchOnKeyboardClosed()
+        Log.d(TAG, "isSearching: $isSearching")
     }
 
     fun addOnSearchEventListener(listener: OnSearchEventListener) {
@@ -110,5 +107,9 @@ open class SearchActivity: AppCompatActivity(), OnSearchEventListener, SearchBox
 
     fun addOnQueryChangeListener(listener: SearchBox.OnQueryChangeListener) {
         onQueryChangeListeners.add(listener)
+    }
+
+    companion object {
+        private const val TAG = "SearchActivity"
     }
 }

@@ -1,37 +1,34 @@
 package com.jeanbarrossilva.period.ui.activity
 
 import android.os.Bundle
-import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import com.google.android.material.bottomappbar.BottomAppBar
+import com.jeanbarrossilva.period.extensions.activity.toolbar
 import com.jeanbarrossilva.period.ui.R
 import com.jeanbarrossilva.period.ui.activity.core.SearchActivity
 
 class MainActivity: SearchActivity() {
-	private lateinit var navController: NavController
-	private lateinit var toolbar: BottomAppBar
+	private val Toolbar.searchItem
+		get() = menu.findItem(R.id.menu_item_search)
 
-	private val searchMenuItem: MenuItem by lazy {
-		toolbar.menu.findItem(R.id.menu_item_search)
-	}
+	private lateinit var navController: NavController
 
 	private fun assignViews() {
 		navController = findNavController(R.id.container)
-		toolbar = findViewById(R.id.toolbar)
 	}
 
 	private fun configToolbar() {
 		navController.addOnDestinationChangedListener { _, destination, _ ->
 			when (destination.id) {
 				R.id.chemicalElementsFragment -> {
-					toolbar.inflateMenu(R.menu.menu_main_toolbar)
-					searchMenuItem.setOnMenuItemClickListener {
+					toolbar?.inflateMenu(R.menu.menu_main_toolbar)
+					toolbar?.searchItem?.setOnMenuItemClickListener {
 						onStartSearch()
 						true
 					}
 				}
-				R.id.chemicalElementDetailsFragment -> toolbar.menu?.clear()
+				R.id.chemicalElementDetailsFragment -> toolbar?.menu?.clear()
 			}
 		}
 	}
@@ -45,6 +42,6 @@ class MainActivity: SearchActivity() {
 
 	override fun onPrimarySearchEventListening(isSearching: Boolean) {
 		super.onPrimarySearchEventListening(isSearching)
-		searchMenuItem.isVisible = !isSearching
+		toolbar?.searchItem?.isVisible = !isSearching
 	}
 }
