@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.jeanbarrossilva.period.extensions.activity.toolbar
+import com.jeanbarrossilva.period.extensions.fragment.withFab
 import com.jeanbarrossilva.period.ui.R
 
 class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_element_details) {
@@ -48,6 +49,12 @@ class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_elemen
         activity?.toolbar?.menu?.clear()
     }
 
+    private fun configFab() {
+        withFab {
+            hide()
+        }
+    }
+
     private fun showDetails() {
         atomicNumberView.text = element.atomicNumber.value.toString()
         symbolView.text = element.symbol.value
@@ -71,6 +78,11 @@ class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_elemen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showDetails()
+    }
+
+    override fun onResume() {
+        super.onResume()
         configToolbar()
+        configFab()
     }
 }
