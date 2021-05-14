@@ -7,9 +7,8 @@ import com.jeanbarrossilva.period.model.ElectronicSubshell.Companion.F_CAPACITY
 import com.jeanbarrossilva.period.model.ElectronicSubshell.Companion.P_CAPACITY
 import com.jeanbarrossilva.period.model.ElectronicSubshell.Companion.S_CAPACITY
 
-sealed class ElectronDistribution(@IntRange(from = 1, to = 7) val shell: Int, val subshell: ElectronicSubshell): Representable {
-    override val representation = "${shell}${subshell.representation}"
-
+sealed class ElectronDistribution(@IntRange(from = 1, to = 7) val shell: Int, val subshell: ElectronicSubshell):
+    ChemicalElementProperty<String>("${shell}${subshell.name}") {
     class OneS(@IntRange(from = 1, to = S_CAPACITY) electronCount: Int):
         ElectronDistribution(1, S(electronCount))
 

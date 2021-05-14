@@ -3,9 +3,7 @@ package com.jeanbarrossilva.period.model
 import androidx.annotation.IntRange
 import com.jeanbarrossilva.period.extensions.int.superscript
 
-sealed class ElectronicSubshell(val name: Char, val electronCount: Int): Representable {
-    override val representation = "$name${electronCount.superscript}"
-
+sealed class ElectronicSubshell(val name: Char, electronCount: Int): ChemicalElementProperty<String>("$name${electronCount.superscript}") {
     class S(@IntRange(from = 1, to = S_CAPACITY) electronCount: Int):
         ElectronicSubshell('s', electronCount)
 

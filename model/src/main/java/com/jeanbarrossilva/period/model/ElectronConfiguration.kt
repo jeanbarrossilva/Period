@@ -1,9 +1,9 @@
 package com.jeanbarrossilva.period.model
 
-class ElectronConfiguration(vararg distributions: ElectronDistribution): Representable {
+class ElectronConfiguration(vararg distributions: ElectronDistribution): ChemicalElementProperty<String>(distributions.joinToString(" ") { distribution ->
+    distribution.value
+}) {
     private val limit = ElectronDistribution::class.sealedSubclasses.size
-
-    override val representation = distributions.joinToString(" ") { it.representation }
 
     init {
         if (distributions.size > limit)
