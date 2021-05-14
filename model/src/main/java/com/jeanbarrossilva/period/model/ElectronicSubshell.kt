@@ -4,16 +4,16 @@ import androidx.annotation.IntRange
 import com.jeanbarrossilva.period.extensions.int.superscript
 
 sealed class ElectronicSubshell(val name: Char, electronCount: Int): ChemicalElementProperty<String>("$name${electronCount.superscript}") {
-    class S(@IntRange(from = 1, to = S_CAPACITY) electronCount: Int):
+    class S internal constructor(@IntRange(from = 1, to = S_CAPACITY) electronCount: Int):
         ElectronicSubshell('s', electronCount)
 
-    class P(@IntRange(from = 1, to = P_CAPACITY) electronCount: Int):
+    class P internal constructor(@IntRange(from = 1, to = P_CAPACITY) electronCount: Int):
         ElectronicSubshell('p', electronCount)
 
-    class D(@IntRange(from = 1, to = D_CAPACITY) electronCount: Int):
+    class D internal constructor(@IntRange(from = 1, to = D_CAPACITY) electronCount: Int):
         ElectronicSubshell('d', electronCount,)
 
-    class F(@IntRange(from = 1, to = F_CAPACITY) electronCount: Int):
+    class F internal constructor(@IntRange(from = 1, to = F_CAPACITY) electronCount: Int):
         ElectronicSubshell('f', electronCount)
 
     companion object {
