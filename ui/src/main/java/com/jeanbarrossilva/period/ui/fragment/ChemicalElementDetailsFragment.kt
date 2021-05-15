@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.jeanbarrossilva.period.extensions.activity.fab
 import com.jeanbarrossilva.period.extensions.activity.toolbar
-import com.jeanbarrossilva.period.extensions.fragment.withFab
 import com.jeanbarrossilva.period.ui.R
 
 class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_element_details) {
@@ -50,9 +50,7 @@ class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_elemen
     }
 
     private fun configFab() {
-        withFab {
-            hide()
-        }
+        activity?.fab?.hide()
     }
 
     private fun showDetails() {
