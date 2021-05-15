@@ -40,7 +40,7 @@
     <img height="400" src="images/screenshot-search.png">
 </div>
 
-Period allows you to carry the periodic table of elements right in your pocket. For now, it has features like sorting and searching. Its modules, as seen in the project structure, are separated by :ui (XML layouts and custom Views), :data (data and sealed classes), :extensions (Kotlin extension functions) and the main one, :app, which just implements all the other ones and is responsible for actually running the app.
+Period allows you to carry the periodic table of elements right in your pocket. For now, it has features like sorting and searching. Its modules, as seen in the project structure, are separated by :ui (XML layouts and custom Views), :model (data and sealed classes), :extensions (Kotlin extension functions) and the main one, :app, which just implements :ui and is responsible for actually running the app.
 
 ### Built With
 
