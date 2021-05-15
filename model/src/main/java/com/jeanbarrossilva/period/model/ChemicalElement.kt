@@ -1680,6 +1680,11 @@ sealed class ChemicalElement(
             ElectronConfiguration(FiveF(14), SixD(10), SevenS(2), SevenP(6))
         )
 
+    override fun toString(): String {
+        return "ChemicalElement(name=$name, symbol=$symbol, atomicNumber=$atomicNumber, atomicMass=$atomicMass, kind=$kind, state=$state, period=$period, " +
+            "group=$group, electronegativity=$electronegativity, electronConfiguration=$electronConfiguration)"
+    }
+
     companion object {
         val values = ChemicalElement::class.values()
 
