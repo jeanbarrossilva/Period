@@ -69,6 +69,7 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
                     }
                 }
             }
+            activity?.fab?.show()
         }
     }
 
