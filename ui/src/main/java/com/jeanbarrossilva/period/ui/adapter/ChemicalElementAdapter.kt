@@ -49,10 +49,10 @@ class ChemicalElementAdapter(private val sortingOption: ChemicalElementSortingOp
 
     override fun getFilter() = object: Filter() {
         override fun performFiltering(constraint: CharSequence?) = FilterResults().apply {
-            constraint?.let {
-                values = sortingOption.getElements().doIf(it.isNotBlank()) {
+            constraint?.let { query ->
+                values = sortingOption.getElements().doIf(query.isNotBlank()) {
                     filterIndexed { _, element ->
-                        it in element.name.value || it in element.symbol.value
+                        query in element.name || query in element.symbol
                     }
                 }
             }
@@ -62,5 +62,9 @@ class ChemicalElementAdapter(private val sortingOption: ChemicalElementSortingOp
             elements = (results?.values as? List<*>).orEmpty() as List<ChemicalElement>
             notifyDataSetChanged()
         }
+    }
+
+    companion object {
+        private const val TAG = "ChemicalElementAdapter"
     }
 }
