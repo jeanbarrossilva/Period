@@ -8,5 +8,9 @@ open class ChemicalElementProperty<T> internal constructor(open val value: T): S
         return "ChemicalElementProperty(value=$value)"
     }
 
+    operator fun contains(other: CharSequence): Boolean {
+        return value is CharSequence && (value as CharSequence).contains(other, ignoreCase = true)
+    }
+
     operator fun getValue(thisRef: Any?, property: KProperty<*>) = value
 }
