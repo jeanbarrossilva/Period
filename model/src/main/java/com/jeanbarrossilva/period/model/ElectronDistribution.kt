@@ -1,14 +1,15 @@
 package com.jeanbarrossilva.period.model
 
 import androidx.annotation.IntRange
+import com.jeanbarrossilva.period.extensions.int.superscript
 import com.jeanbarrossilva.period.model.ElectronicSubshell.*
 import com.jeanbarrossilva.period.model.ElectronicSubshell.Companion.D_CAPACITY
 import com.jeanbarrossilva.period.model.ElectronicSubshell.Companion.F_CAPACITY
 import com.jeanbarrossilva.period.model.ElectronicSubshell.Companion.P_CAPACITY
 import com.jeanbarrossilva.period.model.ElectronicSubshell.Companion.S_CAPACITY
 
-sealed class ElectronDistribution(@IntRange(from = 1, to = 7) val shell: Int, val subshell: ElectronicSubshell):
-    ChemicalElementProperty<String>("${shell}${subshell.name}") {
+sealed class ElectronDistribution(@IntRange(from = 1, to = 7) val shell: Int, subshell: ElectronicSubshell):
+    ChemicalElementProperty<String>("${shell}${subshell.name}${subshell.electronCount.superscript}") {
     class OneS(@IntRange(from = 1, to = S_CAPACITY) electronCount: Int):
         ElectronDistribution(1, S(electronCount))
 
