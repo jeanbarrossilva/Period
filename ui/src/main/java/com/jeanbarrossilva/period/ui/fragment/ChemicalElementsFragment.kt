@@ -13,11 +13,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import com.jeanbarrossilva.period.extensions.activity.fab
 import com.jeanbarrossilva.period.extensions.activity.toolbar
 import com.jeanbarrossilva.period.extensions.animator.doOnEnd
 import com.jeanbarrossilva.period.extensions.context.dialog
 import com.jeanbarrossilva.period.extensions.filter.clear
-import com.jeanbarrossilva.period.extensions.fragment.withFab
 import com.jeanbarrossilva.period.extensions.number.dp
 import com.jeanbarrossilva.period.extensions.valueanimator.addUpdateListener
 import com.jeanbarrossilva.period.extensions.view.updatePadding
@@ -58,16 +58,14 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
                 sortingOption.title
             }
 
-            withFab {
-                setImageResource(R.drawable.ic_round_filter_alt_24)
-                setOnClickListener {
-                    context.dialog {
-                        title(R.string.MaterialDialog_title_sort)
-                        listItemsSingleChoice(items = sortingOptionTitles, initialSelection = ChemicalElementSortingOption.getPreferredIndex(context)) { _, index, _ ->
-                            val selectedSortingOption = ChemicalElementSortingOption.values(context)[index]
-                            viewModel.setSortingOption(selectedSortingOption)
-                            dismiss()
-                        }
+            activity?.fab?.setImageResource(R.drawable.ic_round_filter_alt_24)
+            activity?.fab?.setOnClickListener {
+                context.dialog {
+                    title(R.string.MaterialDialog_title_sort)
+                    listItemsSingleChoice(items = sortingOptionTitles, initialSelection = ChemicalElementSortingOption.getPreferredIndex(context)) { _, index, _ ->
+                        val selectedSortingOption = ChemicalElementSortingOption.values(context)[index]
+                        viewModel.setSortingOption(selectedSortingOption)
+                        dismiss()
                     }
                 }
             }
