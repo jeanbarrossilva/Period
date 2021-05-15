@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filterable
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
-import com.jeanbarrossilva.period.model.ChemicalElement
-import com.jeanbarrossilva.period.model.ChemicalElementSortingOption
+import com.jeanbarrossilva.period.extensions.activity.toolbar
 import com.jeanbarrossilva.period.extensions.animator.doOnEnd
 import com.jeanbarrossilva.period.extensions.context.dialog
 import com.jeanbarrossilva.period.extensions.filter.clear
@@ -22,6 +22,8 @@ import com.jeanbarrossilva.period.extensions.number.dp
 import com.jeanbarrossilva.period.extensions.valueanimator.addUpdateListener
 import com.jeanbarrossilva.period.extensions.view.updatePadding
 import com.jeanbarrossilva.period.extensions.viewmodelprovider.viewModelFactory
+import com.jeanbarrossilva.period.model.ChemicalElement
+import com.jeanbarrossilva.period.model.ChemicalElementSortingOption
 import com.jeanbarrossilva.period.ui.R
 import com.jeanbarrossilva.period.ui.activity.core.SearchActivity
 import com.jeanbarrossilva.period.ui.adapter.ChemicalElementAdapter
@@ -29,6 +31,9 @@ import com.jeanbarrossilva.period.ui.listener.OnSearchEventListener
 import com.jeanbarrossilva.period.ui.viewmodel.ChemicalElementsViewModel
 
 class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
+    private val Toolbar.searchItem
+        get() = menu.findItem(R.id.menu_item_search)
+
     private val viewModel by viewModels<ChemicalElementsViewModel> {
         viewModelFactory(context)
     }
@@ -37,6 +42,14 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
 
     private fun assignViews(view: View) {
         elementsView = view.findViewById(R.id.elements_view)
+    }
+
+    private fun configToolbar() {
+        activity?.toolbar?.inflateMenu(R.menu.menu_main_toolbar)
+        activity?.toolbar?.searchItem?.setOnMenuItemClickListener {
+            (activity as? SearchActivity)?.onStartSearch()
+            true
+        }
     }
 
     private fun configFab() {
@@ -113,6 +126,7 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
 
     override fun onResume() {
         super.onResume()
+        configToolbar()
         configFab()
     }
 

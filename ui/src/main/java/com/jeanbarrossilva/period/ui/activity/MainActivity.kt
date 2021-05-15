@@ -18,26 +18,10 @@ class MainActivity: SearchActivity() {
 		navController = findNavController(R.id.container)
 	}
 
-	private fun configToolbar() {
-		navController.addOnDestinationChangedListener { _, destination, _ ->
-			when (destination.id) {
-				R.id.chemicalElementsFragment -> {
-					toolbar?.inflateMenu(R.menu.menu_main_toolbar)
-					toolbar?.searchItem?.setOnMenuItemClickListener {
-						onStartSearch()
-						true
-					}
-				}
-				R.id.chemicalElementDetailsFragment -> toolbar?.menu?.clear()
-			}
-		}
-	}
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 		assignViews()
-		configToolbar()
 	}
 
 	override fun onPrimarySearchEventListening(isSearching: Boolean) {
