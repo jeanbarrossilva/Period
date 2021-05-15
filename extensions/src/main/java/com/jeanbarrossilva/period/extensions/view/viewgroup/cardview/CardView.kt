@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.period.extensions.view.cardview
+package com.jeanbarrossilva.period.extensions.view.viewgroup.cardview
 
 import androidx.annotation.Px
 import androidx.cardview.widget.CardView
