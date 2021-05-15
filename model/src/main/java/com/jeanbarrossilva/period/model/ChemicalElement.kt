@@ -1687,6 +1687,7 @@ sealed class ChemicalElement(
 
     companion object {
         val values = ChemicalElement::class.values()
+        val default = Oganesson
 
         infix fun of(@IntRange(from = 1, to = 118) atomicNumber: Int) = values.find { it.atomicNumber.value == atomicNumber }!!
     }
