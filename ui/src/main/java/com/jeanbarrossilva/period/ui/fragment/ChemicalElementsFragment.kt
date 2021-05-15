@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filterable
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -73,6 +72,18 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
         }
     }
 
+    private fun configElementSearch(adapter: ChemicalElementAdapter) {
+        (activity as? SearchActivity)?.run {
+            addOnQueryChangeListener { query ->
+                adapter.filter.filter(query)
+            }
+            addOnSearchEventListener(OnSearchEventListener { isSearching ->
+                if (!isSearching)
+                    adapter.filter.clear()
+            })
+        }
+    }
+
     private fun onElementClick(element: ChemicalElement) {
         (activity as? SearchActivity)?.onExitSearch()
         findNavController().navigate(ChemicalElementsFragmentDirections.toDetailsOf(element))
@@ -80,7 +91,7 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
 
     private fun showElements() {
         viewModel.getSortingOption().observe(viewLifecycleOwner) { sortingOption ->
-            elementsView.adapter = ChemicalElementAdapter(sortingOption, ::onElementClick)
+            elementsView.adapter = ChemicalElementAdapter(sortingOption, ::onElementClick).also(::configElementSearch)
             elementsView.layoutManager = LinearLayoutManager(context)
         }
     }
@@ -110,19 +121,6 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
         })
     }
 
-    private fun configElementsSearch() {
-        val elementAdapter = elementsView.adapter as? Filterable
-        (activity as? SearchActivity)?.run {
-            addOnQueryChangeListener { query ->
-                elementAdapter?.filter?.filter(query)
-            }
-            addOnSearchEventListener(OnSearchEventListener { isSearching ->
-                if (!isSearching)
-                    elementAdapter?.filter?.clear()
-            })
-        }
-    }
-
     override fun onResume() {
         super.onResume()
         configToolbar()
@@ -139,6 +137,5 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
         showElements()
         listenToSortingOption()
         freeUpSpaceForBoxOnSearchEvent()
-        configElementsSearch()
     }
 }

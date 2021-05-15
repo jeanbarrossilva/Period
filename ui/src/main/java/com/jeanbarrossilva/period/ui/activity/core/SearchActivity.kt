@@ -39,6 +39,9 @@ open class SearchActivity: AppCompatActivity(), OnSearchEventListener, SearchBox
                 leftMargin = 20.dp(context)
                 rightMargin = 20.dp(context)
             }
+            addOnQueryChangeListener { query ->
+                onQueryChange(query)
+            }
         }
     }
 
@@ -63,9 +66,6 @@ open class SearchActivity: AppCompatActivity(), OnSearchEventListener, SearchBox
         addOnSearchEventListener(OnSearchEventListener { isSearching ->
             onPrimarySearchEventListening(isSearching)
         })
-        addOnQueryChangeListener { query ->
-            onQueryChange(query)
-        }
     }
 
     override fun onBackPressed() {
@@ -85,6 +85,7 @@ open class SearchActivity: AppCompatActivity(), OnSearchEventListener, SearchBox
     }
 
     override fun onQueryChange(query: String) {
+        Log.d(TAG, "onQueryChange: searching for \"$query\"...")
         onQueryChangeListeners.forEach { listener ->
             listener.onQueryChange(query)
         }
