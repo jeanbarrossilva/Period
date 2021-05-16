@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.Gravity
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.cardview.widget.CardView
@@ -14,10 +15,8 @@ import com.jeanbarrossilva.period.extensions.number.dp
 import com.jeanbarrossilva.period.extensions.view.edittext.closeKeyboard
 import com.jeanbarrossilva.period.extensions.view.edittext.doOnTextChanged
 import com.jeanbarrossilva.period.extensions.view.edittext.openKeyboard
-import com.jeanbarrossilva.period.extensions.view.matchParent
 import com.jeanbarrossilva.period.extensions.view.reveal
 import com.jeanbarrossilva.period.extensions.view.unreveal
-import com.jeanbarrossilva.period.extensions.view.wrapContent
 import com.jeanbarrossilva.period.ui.R
 
 class SearchBox: CardView {
@@ -55,7 +54,7 @@ class SearchBox: CardView {
 
     private fun initViews() {
         fieldLayout = FrameLayout(context).apply {
-            matchParent()
+            layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
 
         // For some reason, instantiating it as EditText(context, attrs, defStyleAttr) makes the View unusable.
@@ -63,10 +62,9 @@ class SearchBox: CardView {
             textAlignment = TEXT_ALIGNMENT_TEXT_START
             isSingleLine = true
             background = ColorDrawable(Color.TRANSPARENT)
-            layoutParams = LayoutParams(width, height).apply {
+            layoutParams = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
                 gravity = Gravity.CENTER
             }
-            wrapContent()
             setHint(R.string.SearchBox_hint)
             doOnTextChanged { text ->
                 textAlignment = if (text.isEmpty()) TEXT_ALIGNMENT_TEXT_START else TEXT_ALIGNMENT_CENTER
