@@ -19,7 +19,7 @@ open class SearchActivity: AppCompatActivity(), OnSearchEventListener, SearchBox
     private var onSearchEventListeners = mutableListOf<OnSearchEventListener>()
     private var onQueryChangeListeners = mutableListOf<SearchBox.OnQueryChangeListener>()
     private var shouldExitSearchOnBackPressed = false
-    private var isListeningToKeyboardVisibility = false
+    private var shouldExitSearchOnCloseKeyboard = false
 
     private lateinit var navController: NavController
     private lateinit var searchBox: SearchBox
@@ -47,14 +47,8 @@ open class SearchActivity: AppCompatActivity(), OnSearchEventListener, SearchBox
 
     private fun exitSearchOnKeyboardClosed() {
         KeyboardVisibilityEvent.registerEventListener(this) { isOpen ->
-            isListeningToKeyboardVisibility = true
-            if (!isOpen)
+            if (shouldExitSearchOnCloseKeyboard && !isOpen)
                 onExitSearch()
-        }.also { listener ->
-            if (isListeningToKeyboardVisibility) {
-                listener.unregister()
-                isListeningToKeyboardVisibility = false
-            }
         }
     }
 
@@ -63,6 +57,7 @@ open class SearchActivity: AppCompatActivity(), OnSearchEventListener, SearchBox
         checkIfParentViewIsAppropriate()
         assignViews()
         onAddSearchBox()
+        exitSearchOnKeyboardClosed()
         addOnSearchEventListener(OnSearchEventListener { isSearching ->
             onPrimarySearchEventListening(isSearching)
         })
@@ -97,8 +92,8 @@ open class SearchActivity: AppCompatActivity(), OnSearchEventListener, SearchBox
 
     open fun onPrimarySearchEventListening(isSearching: Boolean) {
         shouldExitSearchOnBackPressed = isSearching
+        shouldExitSearchOnCloseKeyboard = isSearching
         searchBox.isVisible = isSearching
-        exitSearchOnKeyboardClosed()
         Log.d(TAG, "isSearching: $isSearching")
     }
 
