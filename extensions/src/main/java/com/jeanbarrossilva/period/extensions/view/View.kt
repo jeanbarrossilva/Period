@@ -7,7 +7,6 @@ import com.jeanbarrossilva.period.extensions.animator.doOnEnd
 import com.jeanbarrossilva.period.extensions.createCircularReveal
 import com.jeanbarrossilva.period.extensions.hypot
 import kotlin.reflect.KClass
-import kotlin.reflect.full.primaryConstructor
 
 val View.centerX
     get() = x + width / 2
@@ -30,8 +29,6 @@ internal fun <V: View> View.searchFor(isInclusive: Boolean, viewClass: KClass<V>
     return foundView
 }
 
-fun View.matchParent() = setSize(ViewGroup.LayoutParams.MATCH_PARENT)
-
 fun View.reveal(
     onEnd: () -> Unit = {
     }
@@ -41,23 +38,6 @@ fun View.reveal(
 
 inline fun <reified V: View> View.searchFor(isInclusive: Boolean = true) = searchFor(isInclusive, V::class)
 
-fun View.setHeight(height: Int) {
-    updateLayoutParams {
-        this.height = height
-    }
-}
-
-fun View.setSize(size: Int) {
-    setWidth(size)
-    setHeight(size)
-}
-
-fun View.setWidth(width: Int) {
-    updateLayoutParams {
-        this.width = width
-    }
-}
-
 fun View.unreveal(
     onEnd: () -> Unit = {
     }
@@ -66,19 +46,3 @@ fun View.unreveal(
     .start()
 
 fun View.updatePadding(left: Int = paddingLeft, top: Int = paddingTop, right: Int = paddingRight, bottom: Int = paddingBottom) = setPadding(left, top, right, bottom)
-
-fun View.updateLayoutParams(
-    fallback: ViewGroup.LayoutParams = ViewGroup.LayoutParams(width, height),
-    update: ViewGroup.LayoutParams.() -> Unit
-) {
-    if (layoutParams == null)
-        layoutParams = fallback
-    layoutParams!!.update()
-}
-
-@Suppress("UNCHECKED_CAST")
-inline fun <reified LP: ViewGroup.LayoutParams> View.updateLayoutParams(noinline update: LP.() -> Unit) {
-    updateLayoutParams(fallback = LP::class.primaryConstructor!!.call(width, height), update as ViewGroup.LayoutParams.() -> Unit)
-}
-
-fun View.wrapContent() = setSize(ViewGroup.LayoutParams.WRAP_CONTENT)
