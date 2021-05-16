@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.jeanbarrossilva.period.extensions.activity.fab
@@ -38,6 +39,9 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
         viewModelFactory(context)
     }
 
+    private var didRequestSortingDialog = false
+    private var didClickOnSomeElement = false
+
     private lateinit var elementsView: RecyclerView
 
     private fun assignViews(view: View) {
@@ -62,14 +66,19 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
 
             activity?.fab?.setImageResource(R.drawable.ic_round_filter_alt_24)
             activity?.fab?.setOnClickListener {
-                context.dialog {
-                    title(R.string.MaterialDialog_title_sort)
-                    listItemsSingleChoice(items = sortingOptionTitles, initialSelection = ChemicalElementSortingOption.getPreferredIndex(context)) { _, index, _ ->
-                        val selectedSortingOption = ChemicalElementSortingOption.values(context)[index]
-                        viewModel.setSortingOption(selectedSortingOption)
-                        dismiss()
+                didRequestSortingDialog = true
+                if (!didClickOnSomeElement)
+                    context.dialog {
+                        title(R.string.MaterialDialog_title_sort)
+                        onDismiss {
+                            didRequestSortingDialog = false
+                        }
+                        listItemsSingleChoice(items = sortingOptionTitles, initialSelection = ChemicalElementSortingOption.getPreferredIndex(context)) { _, index, _ ->
+                            val selectedSortingOption = ChemicalElementSortingOption.values(context)[index]
+                            viewModel.setSortingOption(selectedSortingOption)
+                            dismiss()
+                        }
                     }
-                }
             }
             activity?.fab?.show()
         }
@@ -88,8 +97,11 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
     }
 
     private fun onElementClick(element: ChemicalElement) {
-        (activity as? SearchActivity)?.onExitSearch()
-        findNavController().navigate(ChemicalElementsFragmentDirections.toDetailsOf(element))
+        if (!didRequestSortingDialog) {
+            didClickOnSomeElement = true
+            (activity as? SearchActivity)?.onExitSearch()
+            findNavController().navigate(ChemicalElementsFragmentDirections.toDetailsOf(element))
+        }
     }
 
     private fun showElements() {
@@ -126,6 +138,7 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
 
     override fun onResume() {
         super.onResume()
+        didClickOnSomeElement = false
         configToolbar()
         configFab()
     }
