@@ -10,74 +10,64 @@ import com.jeanbarrossilva.period.extensions.context.preferences
 import com.jeanbarrossilva.period.extensions.kclass.values
 
 @Suppress("Unused", "LongLogTag")
-sealed class ChemicalElementSortingOption<P: ChemicalElementProperty<*>>(
-    val title: String,
-    val equivalent: (ChemicalElement) -> P,
-    private val elements: List<ChemicalElement>.() -> List<ChemicalElement>
-) {
-    constructor(context: Context, representation: (ChemicalElement) -> P, @StringRes titleRes: Int, elements: List<ChemicalElement>.() -> List<ChemicalElement>):
-        this(context.getString(titleRes), representation, elements)
+sealed class ChemicalElementSortingOption<P: ChemicalElementProperty<*>>(val title: String, val equivalent: ChemicalElement.() -> P) {
+    constructor(context: Context, representation: ChemicalElement.() -> P, @StringRes titleRes: Int):
+        this(context.getString(titleRes), representation)
 
     data class AtomicNumber(private val context: Context): ChemicalElementSortingOption<ChemicalElementInteger.AtomicNumber>(
         context,
         {
-            it.atomicNumber
+            atomicNumber
         },
-        R.string.ChemicalElementSortingOption_AtomicNumber,
-        {
-        sortedBy {
-            it.atomicNumber.value
-        }
-    })
+        R.string.ChemicalElementSortingOption_AtomicNumber
+    )
 
     data class AtomicMass(private val context: Context): ChemicalElementSortingOption<ChemicalElementFloat.AtomicMass>(
         context,
         {
-            it.atomicMass
+            atomicMass
         },
-        R.string.ChemicalElementSortingOption_AtomicMass,
-        {
-            sortedBy {
-                it.atomicMass.value
-            }
-        }
+        R.string.ChemicalElementSortingOption_AtomicMass
     )
 
     data class Name(private val context: Context): ChemicalElementSortingOption<ChemicalElementName>(
         context,
         {
-            it.name
+            name
         },
-        R.string.ChemicalElementSortingOption_Name,
-        {
-            sortedBy {
-                it.name.value
-            }
-        }
+        R.string.ChemicalElementSortingOption_Name
     )
 
     data class Kind(private val context: Context): ChemicalElementSortingOption<ChemicalElementKind>(
         context,
         {
-            it.kind
+            kind
         },
-        R.string.ChemicalElementSortingOption_Kind,
-        {
-            sortedBy {
-                it.kind.name
-            }
-        }
+        R.string.ChemicalElementSortingOption_Kind
     )
 
-    fun getElements() = elements(ChemicalElement.values)
+    data class ElectronConfiguration(private val context: Context): ChemicalElementSortingOption<com.jeanbarrossilva.period.model.ElectronConfiguration>(
+        context,
+        {
+            electronConfiguration
+        },
+        R.string.ChemicalElementSortingOption_ElectronConfiguration
+    )
+
+    @Suppress("UNCHECKED_CAST")
+    fun getElements(): List<ChemicalElement> {
+        return ChemicalElement.values.sortedBy { element ->
+            element.equivalent().value as Comparable<Any>
+        }
+    }
 
     companion object {
         private const val TAG = "ChemicalElementSortingOption"
         private const val PREF_KEY_PREFERRED_SORTING_OPTION = "preferred_sorting_option"
 
-        fun values(context: Context) = ChemicalElementSortingOption::class.values(context)
+        private fun getDefault(context: Context) = AtomicMass(context)
 
-        fun getDefault(context: Context) = AtomicMass(context)
+        fun values(context: Context) = ChemicalElementSortingOption::class.values(context)
 
         fun getPreferred(context: Context): ChemicalElementSortingOption<*> {
             val values = values(context)
@@ -98,8 +88,8 @@ sealed class ChemicalElementSortingOption<P: ChemicalElementProperty<*>>(
         }
 
         fun prefer(context: Context, sortingOption: ChemicalElementSortingOption<*>) {
-            val valueClasses = values(context).map { sortinngOption ->
-                sortinngOption::class
+            val valueClasses = values(context).map {
+                it::class
             }
             context.preferences.edit {
                 putInt(PREF_KEY_PREFERRED_SORTING_OPTION, valueClasses.indexOf(sortingOption::class))

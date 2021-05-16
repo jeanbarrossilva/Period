@@ -8,8 +8,8 @@ import com.jeanbarrossilva.period.model.ElectronicSubshell.Companion.F_CAPACITY
 import com.jeanbarrossilva.period.model.ElectronicSubshell.Companion.P_CAPACITY
 import com.jeanbarrossilva.period.model.ElectronicSubshell.Companion.S_CAPACITY
 
-sealed class ElectronDistribution(@IntRange(from = 1, to = 7) val shell: Int, subshell: ElectronicSubshell):
-    ChemicalElementProperty<String>("${shell}${subshell.name}${subshell.electronCount.superscript}") {
+sealed class ElectronDistribution(@IntRange(from = 1, to = 7) val shell: Int, val subshell: ElectronicSubshell):
+    ChemicalElementProperty<String>("${shell}${subshell.name}${subshell.electronCount.superscript}"), Comparable<ElectronDistribution> {
     class OneS(@IntRange(from = 1, to = S_CAPACITY) electronCount: Int):
         ElectronDistribution(1, S(electronCount))
 
@@ -66,4 +66,8 @@ sealed class ElectronDistribution(@IntRange(from = 1, to = 7) val shell: Int, su
 
     class SevenP(@IntRange(from = 1, to = P_CAPACITY) electronCount: Int):
         ElectronDistribution(7, P(electronCount))
+
+    override fun compareTo(other: ElectronDistribution): Int {
+        return subshell.electronCount.compareTo(other.subshell.electronCount)
+    }
 }
