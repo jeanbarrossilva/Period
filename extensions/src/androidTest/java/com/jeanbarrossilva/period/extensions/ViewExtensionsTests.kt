@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.period.ui
+package com.jeanbarrossilva.period.extensions
 
 import android.view.View
 import android.widget.FrameLayout
