@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.jeanbarrossilva.period.extensions.activity.fab
 import com.jeanbarrossilva.period.extensions.activity.toolbar
 import com.jeanbarrossilva.period.ui.R
@@ -33,6 +34,7 @@ class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_elemen
 
     private fun configToolbar() {
         activity?.toolbar?.menu?.clear()
+        (activity?.toolbar as? BottomAppBar)?.performHide()
     }
 
     private fun configFab() {

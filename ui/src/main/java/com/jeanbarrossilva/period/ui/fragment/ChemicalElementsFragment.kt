@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.jeanbarrossilva.period.extensions.activity.fab
 import com.jeanbarrossilva.period.extensions.activity.toolbar
 import com.jeanbarrossilva.period.extensions.animator.doOnEnd
@@ -44,11 +45,13 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
     }
 
     private fun configToolbar() {
+        activity?.toolbar?.menu?.clear()
         activity?.toolbar?.inflateMenu(R.menu.menu_main_toolbar)
         activity?.toolbar?.searchItem?.setOnMenuItemClickListener {
             (activity as? SearchActivity)?.onStartSearch()
             true
         }
+        (activity?.toolbar as? BottomAppBar)?.performShow()
     }
 
     private fun configFab() {
