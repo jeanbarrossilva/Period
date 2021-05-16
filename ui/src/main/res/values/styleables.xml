@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="ChemicalElementDetailsView">
+        <attr name="element" />
+    </declare-styleable>
+
     <declare-styleable name="ChemicalElementSymbolView">
-        <attr name="element" format="integer" />
+        <attr name="element" />
     </declare-styleable>
 
     <declare-styleable name="Column">
