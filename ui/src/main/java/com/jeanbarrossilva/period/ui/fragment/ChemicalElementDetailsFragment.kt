@@ -10,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import com.jeanbarrossilva.period.extensions.activity.fab
 import com.jeanbarrossilva.period.extensions.activity.toolbar
 import com.jeanbarrossilva.period.ui.R
+import com.jeanbarrossilva.period.ui.view.ChemicalElementDetailsView
 import com.jeanbarrossilva.period.ui.view.ChemicalElementSymbolView
 
 class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_element_details) {
@@ -21,25 +22,13 @@ class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_elemen
     private lateinit var symbolView: ChemicalElementSymbolView
     private lateinit var nameView: TextView
     private lateinit var electronConfigurationView: TextView
-    private lateinit var kindView: TextView
-    private lateinit var groupView: TextView
-    private lateinit var periodView: TextView
-    private lateinit var protonsView: TextView
-    private lateinit var neutronsView: TextView
-    private lateinit var electronsView: TextView
-    private lateinit var electronegativityView: TextView
+    private lateinit var detailsView: ChemicalElementDetailsView
 
     private fun assignViews(view: View) {
         symbolView = view.findViewById(R.id.symbol_view)
         nameView = view.findViewById(R.id.name_view)
         electronConfigurationView = view.findViewById(R.id.electron_configuration_view)
-        kindView = view.findViewById(R.id.kind_view)
-        groupView = view.findViewById(R.id.group_view)
-        periodView = view.findViewById(R.id.period_view)
-        protonsView = view.findViewById(R.id.protons_view)
-        neutronsView = view.findViewById(R.id.neutrons_view)
-        electronsView = view.findViewById(R.id.electrons_view)
-        electronegativityView = view.findViewById(R.id.electronegativity_view)
+        detailsView = view.findViewById(R.id.details_view)
     }
 
     private fun configToolbar() {
@@ -54,13 +43,7 @@ class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_elemen
         symbolView.element = element
         nameView.text = element.name.value
         electronConfigurationView.text = element.electronConfiguration.value
-        kindView.text = element.kind.name
-        groupView.text = element.group?.value.toString()
-        periodView.text = element.period?.value.toString()
-        protonsView.text = element.protons.value.toString()
-        neutronsView.text = element.neutrons.value.toString()
-        electronsView.text = element.electrons.toString()
-        electronegativityView.text = element.electronegativity?.value.toString()
+        detailsView.element = element
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
