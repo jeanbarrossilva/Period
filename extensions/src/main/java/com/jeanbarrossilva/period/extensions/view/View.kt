@@ -7,6 +7,7 @@ import com.jeanbarrossilva.period.extensions.animator.doOnEnd
 import com.jeanbarrossilva.period.extensions.createCircularReveal
 import com.jeanbarrossilva.period.extensions.hypot
 import kotlin.reflect.KClass
+import kotlin.reflect.full.primaryConstructor
 
 val View.centerX
     get() = x + width / 2
@@ -73,6 +74,11 @@ fun View.updateLayoutParams(
     if (layoutParams == null)
         layoutParams = fallback
     layoutParams!!.update()
+}
+
+@Suppress("UNCHECKED_CAST")
+inline fun <reified LP: ViewGroup.LayoutParams> View.updateLayoutParams(noinline update: LP.() -> Unit) {
+    updateLayoutParams(fallback = LP::class.primaryConstructor!!.call(width, height), update as ViewGroup.LayoutParams.() -> Unit)
 }
 
 fun View.wrapContent() = setSize(ViewGroup.LayoutParams.WRAP_CONTENT)
