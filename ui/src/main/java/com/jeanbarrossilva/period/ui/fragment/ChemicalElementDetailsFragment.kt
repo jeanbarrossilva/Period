@@ -10,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import com.jeanbarrossilva.period.extensions.activity.fab
 import com.jeanbarrossilva.period.extensions.activity.toolbar
 import com.jeanbarrossilva.period.ui.R
+import com.jeanbarrossilva.period.ui.view.ChemicalElementSymbolView
 
 class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_element_details) {
     private val navArgs by navArgs<ChemicalElementDetailsFragmentArgs>()
@@ -17,9 +18,7 @@ class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_elemen
         navArgs.element
     }
 
-    private lateinit var atomicNumberView: TextView
-    private lateinit var symbolView: TextView
-    private lateinit var atomicMassView: TextView
+    private lateinit var symbolView: ChemicalElementSymbolView
     private lateinit var nameView: TextView
     private lateinit var electronConfigurationView: TextView
     private lateinit var kindView: TextView
@@ -31,9 +30,7 @@ class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_elemen
     private lateinit var electronegativityView: TextView
 
     private fun assignViews(view: View) {
-        atomicNumberView = view.findViewById(R.id.atomic_number_view)
         symbolView = view.findViewById(R.id.symbol_view)
-        atomicMassView = view.findViewById(R.id.atomic_mass_view)
         nameView = view.findViewById(R.id.name_view)
         electronConfigurationView = view.findViewById(R.id.electron_configuration_view)
         kindView = view.findViewById(R.id.kind_view)
@@ -54,9 +51,7 @@ class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_elemen
     }
 
     private fun showDetails() {
-        atomicNumberView.text = element.atomicNumber.value.toString()
-        symbolView.text = element.symbol.value
-        atomicMassView.text = element.atomicMass.value.toString()
+        symbolView.element = element
         nameView.text = element.name.value
         electronConfigurationView.text = element.electronConfiguration.value
         kindView.text = element.kind.name

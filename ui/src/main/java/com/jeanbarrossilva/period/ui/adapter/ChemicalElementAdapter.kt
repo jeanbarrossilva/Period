@@ -15,14 +15,14 @@ import com.jeanbarrossilva.period.model.ChemicalElementInteger
 import com.jeanbarrossilva.period.model.ChemicalElementName
 import com.jeanbarrossilva.period.model.ChemicalElementSortingOption
 import com.jeanbarrossilva.period.ui.R
+import com.jeanbarrossilva.period.ui.view.CompactChemicalElementSymbolView
 
 class ChemicalElementAdapter(private val sortingOption: ChemicalElementSortingOption<*>, private val onClick: (ChemicalElement) -> Unit):
     RecyclerView.Adapter<ChemicalElementAdapter.ChemicalElementViewHolder>(), Filterable {
     private var elements = sortingOption.getElements()
 
     inner class ChemicalElementViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        private val atomicNumberView = view.findViewById<TextView>(R.id.atomic_number_view)
-        private val symbolView = view.findViewById<TextView>(R.id.symbol_view)
+        private val compactSymbolView = view.findViewById<CompactChemicalElementSymbolView>(R.id.compact_symbol_view)
         private val nameView = view.findViewById<TextView>(R.id.name_view)
         private val additionalInfoView = view.findViewById<TextView>(R.id.additional_info_view)
 
@@ -30,8 +30,7 @@ class ChemicalElementAdapter(private val sortingOption: ChemicalElementSortingOp
             itemView.setOnClickListener {
                 onClick(element)
             }
-            atomicNumberView.text = "${element.atomicNumber.value}"
-            symbolView.text = element.symbol.value
+            compactSymbolView.element = element
             nameView.text = element.name.value
             additionalInfoView.isVisible = !sortingOption.equivalent(element).instanceof(ChemicalElementName::class, ChemicalElementInteger.AtomicNumber::class)
             additionalInfoView.text = sortingOption.equivalent(element).value.toString()

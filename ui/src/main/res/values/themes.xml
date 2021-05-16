@@ -11,6 +11,7 @@
             tools:targetApi="27">
             @bool/isSystemInLightTheme
         </item>
+        <item name="android:fontFamily">@font/android_euclid_medium</item>
         <item name="android:colorEdgeEffect">@color/edgeEffect</item>
     </style>
 </resources>

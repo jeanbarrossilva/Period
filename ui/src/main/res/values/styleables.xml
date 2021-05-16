@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="ChemicalElementBoxView">
-        <attr name="isExpanded" format="boolean" />
+    <declare-styleable name="ChemicalElementSymbolView">
+        <attr name="element" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="Column">
