@@ -7,7 +7,7 @@ buildscript {
         version_code = 1
         version_name = '1.0'
 
-        compose_version = '1.0.0-alpha06'
+        compose_version = '1.0.0-beta06'
         kotlin_version = '1.4.32'
         navigation_version = '2.3.5'
     }
