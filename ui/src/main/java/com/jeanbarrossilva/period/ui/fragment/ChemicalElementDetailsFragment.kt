@@ -4,32 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.jeanbarrossilva.period.extensions.activity.fab
 import com.jeanbarrossilva.period.extensions.activity.toolbar
-import com.jeanbarrossilva.period.ui.R
-import com.jeanbarrossilva.period.ui.view.ChemicalElementDetailsView
-import com.jeanbarrossilva.period.ui.view.ChemicalElementSymbolView
+import com.jeanbarrossilva.period.ui.composable.ChemicalElementDetailsUI
 
-class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_element_details) {
+class ChemicalElementDetailsFragment: Fragment() {
     private val navArgs by navArgs<ChemicalElementDetailsFragmentArgs>()
     private val element by lazy {
         navArgs.element
-    }
-
-    private lateinit var symbolView: ChemicalElementSymbolView
-    private lateinit var nameView: TextView
-    private lateinit var electronConfigurationView: TextView
-    private lateinit var detailsView: ChemicalElementDetailsView
-
-    private fun assignViews(view: View) {
-        symbolView = view.findViewById(R.id.symbol_view)
-        nameView = view.findViewById(R.id.name_view)
-        electronConfigurationView = view.findViewById(R.id.electron_configuration_view)
-        detailsView = view.findViewById(R.id.details_view)
     }
 
     private fun configToolbar() {
@@ -41,21 +27,12 @@ class ChemicalElementDetailsFragment: Fragment(R.layout.fragment_chemical_elemen
         activity?.fab?.hide()
     }
 
-    private fun showDetails() {
-        symbolView.element = element
-        nameView.text = element.name.value
-        electronConfigurationView.text = element.electronConfiguration.value
-        detailsView.element = element
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
-        super.onCreateView(inflater, container, savedInstanceState)?.also { view ->
-            assignViews(view)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                ChemicalElementDetailsUI(element)
+            }
         }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        showDetails()
     }
 
     override fun onResume() {

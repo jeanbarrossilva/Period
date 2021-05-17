@@ -3,9 +3,9 @@ package com.jeanbarrossilva.period.ui.activity.core
 import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.jeanbarrossilva.period.extensions.activity.view
@@ -15,7 +15,7 @@ import com.jeanbarrossilva.period.ui.listener.OnSearchEventListener
 import com.jeanbarrossilva.period.ui.view.SearchBox
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
-open class SearchActivity: AppCompatActivity(), OnSearchEventListener, SearchBox.OnQueryChangeListener {
+open class SearchActivity: FragmentActivity(), OnSearchEventListener, SearchBox.OnQueryChangeListener {
     private var onSearchEventListeners = mutableListOf<OnSearchEventListener>()
     private var onQueryChangeListeners = mutableListOf<SearchBox.OnQueryChangeListener>()
     private var shouldExitSearchOnBackPressed = false
