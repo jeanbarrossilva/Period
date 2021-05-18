@@ -1,28 +1,30 @@
 package com.jeanbarrossilva.period.ui.view
 
 import android.content.Context
-import android.graphics.Typeface
 import android.util.AttributeSet
-import android.view.ViewGroup
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.TextView
-import androidx.annotation.StringRes
-import com.jeanbarrossilva.period.extensions.context.colorOf
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.AbstractComposeView
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.jeanbarrossilva.period.extensions.context.withStyledAttributes
-import com.jeanbarrossilva.period.extensions.number.dp
 import com.jeanbarrossilva.period.model.ChemicalElement
-import com.jeanbarrossilva.period.model.ChemicalElementProperty
 import com.jeanbarrossilva.period.ui.R
+import com.jeanbarrossilva.period.ui.composable.theme.androidEuclidBold
 
-class ChemicalElementDetailsView: TableLayout {
-    var element: ChemicalElement? = null
-        set(value) {
-            field = value
-            value?.let {
-                updateWith(it)
-            }
-        }
+class ChemicalElementDetailsView: AbstractComposeView {
+    var element by mutableStateOf<ChemicalElement?>(null)
 
     constructor(context: Context): super(context) {
         init()
@@ -32,53 +34,12 @@ class ChemicalElementDetailsView: TableLayout {
         init(attrs)
     }
 
-    private fun updateWith(element: ChemicalElement) {
-        removeAllViews()
-        listOf(
-            createTableRow(R.string.ChemicalElementDetailsView_kind, element.kind),
-            createTableRow(R.string.ChemicalElementDetailsView_group, element.group),
-            createTableRow(R.string.ChemicalElementDetailsView_period, element.period),
-            createTableRow(R.string.ChemicalElementDetailsView_protons, element.protons),
-            createTableRow(R.string.ChemicalElementDetailsView_neutrons, element.neutrons),
-            createTableRow(R.string.ChemicalElementDetailsView_electrons, element.electrons),
-            createTableRow(R.string.ChemicalElementDetailsView_electronegativity, element.electronegativity)
-        ).forEach { tableRow ->
-            addView(tableRow)
-        }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
+        init(attrs, defStyleAttr)
     }
 
-    private fun createPropertyTitleTextView(@StringRes titleRes: Int): TextView {
-        return TextView(context).apply {
-            textAlignment = TEXT_ALIGNMENT_VIEW_START
-            layoutParams = TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
-                weight = 0.5f
-            }
-            setTypeface(typeface, Typeface.BOLD)
-            setText(titleRes)
-        }
-    }
-
-    private fun createPropertyValueTextView(property: ChemicalElementProperty<*>?): TextView {
-        return TextView(context).apply {
-            text = property?.value?.toString() ?: "N/A"
-            textAlignment = TEXT_ALIGNMENT_VIEW_END
-            layoutParams = TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
-                weight = 0.5f
-            }
-            setTextColor(context colorOf android.R.attr.textColorSecondary)
-        }
-    }
-
-    private fun createTableRow(@StringRes titleRes: Int, property: ChemicalElementProperty<*>?): TableRow {
-        return TableRow(context).apply {
-            setPadding(30.dp(context), 10.dp(context), 30.dp(context), 10.dp(context))
-            addView(createPropertyTitleTextView(titleRes))
-            addView(createPropertyValueTextView(property))
-        }
-    }
-
-    private fun getAttrs(attrs: AttributeSet?) {
-        context.withStyledAttributes(attrs, defStyleAttr = 0, R.styleable.ChemicalElementDetailsView) { index ->
+    private fun getAttrs(attrs: AttributeSet?, defStyleAttr: Int) {
+        context.withStyledAttributes(attrs, defStyleAttr, R.styleable.ChemicalElementDetailsView) { index ->
             if (index == R.styleable.ChemicalElementDetailsView_element)
                 element = ChemicalElement of getInt(index, ChemicalElement.default.atomicNumber.value)
         }
@@ -89,8 +50,50 @@ class ChemicalElementDetailsView: TableLayout {
             element = ChemicalElement.default
     }
 
-    private fun init(attrs: AttributeSet? = null) {
-        getAttrs(attrs)
+    private fun init(attrs: AttributeSet? = null, defStyleAttr: Int = 0) {
+        getAttrs(attrs, defStyleAttr)
         populateForPreview()
+    }
+
+    @Composable
+    override fun Content() {
+        element?.let { element ->
+            Column(
+                Modifier
+                    .fillMaxWidth()
+            ) {
+                listOf(
+                    R.string.ChemicalElementDetailsView_kind to element.kind,
+                    R.string.ChemicalElementDetailsView_group to element.group,
+                    R.string.ChemicalElementDetailsView_period to element.period,
+                    R.string.ChemicalElementDetailsView_protons to element.protons,
+                    R.string.ChemicalElementDetailsView_neutrons to element.neutrons,
+                    R.string.ChemicalElementDetailsView_electrons to element.electrons,
+                    R.string.ChemicalElementDetailsView_electronegativity to element.electronegativity
+                ).forEach { (propertyTitleRes, property) ->
+                    Row(
+                        Modifier
+                            .padding(horizontal = 30.dp, vertical = 10.dp)
+                    ) {
+                        Text(
+                            stringResource(propertyTitleRes),
+                            Modifier
+                                .fillMaxWidth(0.5f)
+                                .alpha(ContentAlpha.medium),
+                            fontFamily = androidEuclidBold,
+                            textAlign = TextAlign.Start
+                        )
+
+                        Text(
+                            "${property?.value ?: "N/A"}",
+                            Modifier
+                                .fillMaxWidth()
+                                .alpha(ContentAlpha.medium),
+                            textAlign = TextAlign.End
+                        )
+                    }
+                }
+            }
+        }
     }
 }
