@@ -9,6 +9,7 @@ import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.annotation.AttrRes
 import androidx.annotation.StyleableRes
 import androidx.core.content.getSystemService
@@ -40,6 +41,15 @@ fun Context.dialog(onShow: MaterialDialog.() -> Unit) {
             cornerRadius(25f)
         onShow()
     }
+}
+
+fun Context.toast(
+    message: String,
+    length: Int = Toast.LENGTH_SHORT,
+    update: Toast.() -> Unit = {
+    }
+) {
+    Toast.makeText(this, message, length).apply(update).show()
 }
 
 fun Context.withStyledAttributes(attrs: AttributeSet?, defStyleAttr: Int, @StyleableRes styleableRes: IntArray, onEachIndex: TypedArray.(Int) -> Unit) =
