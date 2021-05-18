@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -100,7 +102,11 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
         if (!didRequestSortingDialog) {
             didClickOnSomeElement = true
             (activity as? SearchActivity)?.onExitSearch()
-            findNavController().navigate(ChemicalElementsFragmentDirections.toDetailsOf(element))
+            findNavController().navigate(ChemicalElementsFragmentDirections.toDetailsOf(element)).also {
+                viewModel.getSortingOption().value?.let { sortingOption ->
+                    setFragmentResult("sortingOption", bundleOf("sortingOption" to sortingOption))
+                }
+            }
         }
     }
 

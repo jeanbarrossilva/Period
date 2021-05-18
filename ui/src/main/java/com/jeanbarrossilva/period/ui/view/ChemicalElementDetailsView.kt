@@ -33,6 +33,7 @@ class ChemicalElementDetailsView: TableLayout {
     }
 
     private fun updateWith(element: ChemicalElement) {
+        removeAllViews()
         listOf(
             createTableRow(R.string.ChemicalElementDetailsView_kind, element.kind),
             createTableRow(R.string.ChemicalElementDetailsView_group, element.group),

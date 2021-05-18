@@ -8,9 +8,10 @@ import com.jeanbarrossilva.data.R
 import com.jeanbarrossilva.period.extensions.any.doIf
 import com.jeanbarrossilva.period.extensions.context.preferences
 import com.jeanbarrossilva.period.extensions.kclass.values
+import java.io.Serializable
 
 @Suppress("Unused", "LongLogTag")
-sealed class ChemicalElementSortingOption<P: ChemicalElementProperty<*>>(val title: String, val equivalent: ChemicalElement.() -> P) {
+sealed class ChemicalElementSortingOption<P: ChemicalElementProperty<*>>(val title: String, val equivalent: ChemicalElement.() -> P): Serializable {
     constructor(context: Context, representation: ChemicalElement.() -> P, @StringRes titleRes: Int):
         this(context.getString(titleRes), representation)
 
