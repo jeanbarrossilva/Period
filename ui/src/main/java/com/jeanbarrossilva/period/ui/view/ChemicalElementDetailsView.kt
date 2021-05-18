@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.jeanbarrossilva.period.extensions.context.withStyledAttributes
 import com.jeanbarrossilva.period.model.ChemicalElement
+import com.jeanbarrossilva.period.model.ChemicalElementProperty.Companion.displayValue
 import com.jeanbarrossilva.period.ui.R
 import com.jeanbarrossilva.period.ui.composable.theme.androidEuclidBold
 
@@ -64,6 +65,7 @@ class ChemicalElementDetailsView: AbstractComposeView {
             ) {
                 listOf(
                     R.string.ChemicalElementDetailsView_kind to element.kind,
+                    R.string.ChemicalElementDetailsView_atomic_mass to element.atomicMass,
                     R.string.ChemicalElementDetailsView_group to element.group,
                     R.string.ChemicalElementDetailsView_period to element.period,
                     R.string.ChemicalElementDetailsView_protons to element.protons,
@@ -85,7 +87,7 @@ class ChemicalElementDetailsView: AbstractComposeView {
                         )
 
                         Text(
-                            "${property?.value ?: "N/A"}",
+                            property.displayValue,
                             Modifier
                                 .fillMaxWidth()
                                 .alpha(ContentAlpha.medium),
