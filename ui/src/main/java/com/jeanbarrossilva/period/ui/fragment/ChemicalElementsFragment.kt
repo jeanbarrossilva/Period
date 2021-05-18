@@ -62,7 +62,7 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
         context?.let { context ->
             val sortingOptionTitles = ChemicalElementSortingOption.values(context).map { sortingOption ->
                 sortingOption.title
-            }
+            }.sorted()
 
             activity?.fab?.setImageResource(R.drawable.ic_round_filter_alt_24)
             activity?.fab?.setOnClickListener {
