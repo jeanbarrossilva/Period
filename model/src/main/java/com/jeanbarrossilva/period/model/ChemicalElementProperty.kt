@@ -3,7 +3,7 @@ package com.jeanbarrossilva.period.model
 import java.io.Serializable
 import kotlin.reflect.KProperty
 
-open class ChemicalElementProperty<T: Comparable<T>> internal constructor(open val value: T): Serializable {
+open class ChemicalElementProperty<T: Comparable<T>> internal constructor(open val value: T, val measurementUnit: MeasurementUnit? = null): Serializable {
     override fun toString(): String {
         return "ChemicalElementProperty(value=$value)"
     }
@@ -13,4 +13,13 @@ open class ChemicalElementProperty<T: Comparable<T>> internal constructor(open v
     }
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>) = value
+
+    companion object {
+        val ChemicalElementProperty<*>?.displayValue: String
+            get() {
+                return this?.let {
+                    "$value ${measurementUnit?.symbol ?: ""}"
+                } ?: "N/A"
+            }
+    }
 }
