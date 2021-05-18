@@ -16,6 +16,7 @@
     <string name="MaterialDialog_title_sort">Sort by…</string>
 
     <string name="ChemicalElementDetailsView_kind">Kind</string>
+    <string name="ChemicalElementDetailsView_atomic_mass">Atomic mass</string>
     <string name="ChemicalElementDetailsView_group">Group</string>
     <string name="ChemicalElementDetailsView_period">Period</string>
     <string name="ChemicalElementDetailsView_protons">Protons</string>
