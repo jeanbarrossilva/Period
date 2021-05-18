@@ -27,7 +27,7 @@ class ChemicalElementDetailsFragment: Fragment() {
 
     private fun configToolbar() {
         activity?.toolbar?.menu?.clear()
-        (activity?.toolbar as? BottomAppBar)?.performHide()
+        (activity?.toolbar as? BottomAppBar)?.performShow()
     }
 
     private fun configFab() {
