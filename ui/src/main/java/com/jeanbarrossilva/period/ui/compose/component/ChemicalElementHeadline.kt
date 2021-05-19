@@ -20,6 +20,7 @@ import com.jeanbarrossilva.period.extensions.number.dp
 import com.jeanbarrossilva.period.model.ChemicalElement
 import com.jeanbarrossilva.period.ui.compose.theme.PeriodTheme
 import com.jeanbarrossilva.period.ui.compose.theme.androidEuclidBold
+import com.jeanbarrossilva.period.ui.compose.workaround.textColor
 import com.jeanbarrossilva.period.ui.view.ChemicalElementSymbolView
 
 @Composable
@@ -49,6 +50,7 @@ fun ChemicalElementHeadline(element: ChemicalElement, modifier: Modifier = Modif
             ) {
                 Text(
                     element.name.value,
+                    color = textColor(),
                     fontSize = 35.sp,
                     fontFamily = androidEuclidBold,
                     textAlign = TextAlign.Center
@@ -57,6 +59,7 @@ fun ChemicalElementHeadline(element: ChemicalElement, modifier: Modifier = Modif
                 Text(
                     element.electronConfiguration.value,
                     Modifier.alpha(ContentAlpha.medium),
+                    textColor(),
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center
                 )

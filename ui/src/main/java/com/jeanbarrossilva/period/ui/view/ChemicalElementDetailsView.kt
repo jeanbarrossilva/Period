@@ -23,6 +23,7 @@ import com.jeanbarrossilva.period.model.ChemicalElement
 import com.jeanbarrossilva.period.model.ChemicalElementProperty.Companion.displayValue
 import com.jeanbarrossilva.period.ui.R
 import com.jeanbarrossilva.period.ui.compose.theme.androidEuclidBold
+import com.jeanbarrossilva.period.ui.compose.workaround.textColor
 
 class ChemicalElementDetailsView: AbstractComposeView {
     var element by mutableStateOf<ChemicalElement?>(null)
@@ -82,6 +83,7 @@ class ChemicalElementDetailsView: AbstractComposeView {
                             Modifier
                                 .fillMaxWidth(0.5f)
                                 .alpha(ContentAlpha.medium),
+                            textColor(),
                             fontFamily = androidEuclidBold,
                             textAlign = TextAlign.Start
                         )
@@ -91,6 +93,7 @@ class ChemicalElementDetailsView: AbstractComposeView {
                             Modifier
                                 .fillMaxWidth()
                                 .alpha(ContentAlpha.medium),
+                            textColor(),
                             textAlign = TextAlign.End
                         )
                     }
