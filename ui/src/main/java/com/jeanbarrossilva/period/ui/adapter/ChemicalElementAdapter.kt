@@ -13,6 +13,7 @@ import com.jeanbarrossilva.period.extensions.any.instanceof
 import com.jeanbarrossilva.period.model.ChemicalElement
 import com.jeanbarrossilva.period.model.ChemicalElementInteger
 import com.jeanbarrossilva.period.model.ChemicalElementName
+import com.jeanbarrossilva.period.model.ChemicalElementProperty.Companion.displayValue
 import com.jeanbarrossilva.period.model.ChemicalElementSortingOption
 import com.jeanbarrossilva.period.ui.R
 import com.jeanbarrossilva.period.ui.view.CompactChemicalElementSymbolView
@@ -33,7 +34,7 @@ class ChemicalElementAdapter(private val sortingOption: ChemicalElementSortingOp
             compactSymbolView.element = element
             nameView.text = element.name.value
             additionalInfoView.isVisible = !sortingOption.equivalent(element).instanceof(ChemicalElementName::class, ChemicalElementInteger.AtomicNumber::class)
-            additionalInfoView.text = sortingOption.equivalent(element).value.toString()
+            additionalInfoView.text = sortingOption.equivalent(element).displayValue
         }
     }
 
