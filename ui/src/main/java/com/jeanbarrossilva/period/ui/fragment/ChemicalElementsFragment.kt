@@ -53,7 +53,7 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
         activity?.toolbar?.menu?.clear()
         activity?.toolbar?.inflateMenu(R.menu.menu_main_toolbar)
         activity?.toolbar?.searchItem?.setOnMenuItemClickListener {
-            (activity as? SearchActivity)?.onStartSearch()
+            (activity as? SearchActivity)?.onSearchEvent(isSearching = true)
             true
         }
     }
@@ -84,22 +84,28 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
         }
     }
 
+    private fun configSearchIconVisibility() {
+        (activity as? SearchActivity)?.addOnSearchEventListener { isSearching ->
+            activity?.toolbar?.searchItem?.isVisible = !isSearching
+        }
+    }
+
     private fun configElementSearch(adapter: ChemicalElementAdapter) {
         (activity as? SearchActivity)?.run {
             addOnQueryChangeListener { query ->
                 adapter.filter.filter(query)
             }
-            addOnSearchEventListener(OnSearchEventListener { isSearching ->
+            addOnSearchEventListener { isSearching ->
                 if (!isSearching)
                     adapter.filter.clear()
-            })
+            }
         }
     }
 
     private fun onElementClick(element: ChemicalElement) {
         if (!didRequestSortingDialog) {
             didClickOnSomeElement = true
-            (activity as? SearchActivity)?.onExitSearch()
+            (activity as? SearchActivity)?.onSearchEvent(isSearching = false)
             findNavController().navigate(ChemicalElementsFragmentDirections.toDetailsOf(element)).also {
                 viewModel.getSortingOption().value?.let { sortingOption ->
                     setFragmentResult("sortingOption", bundleOf("sortingOption" to sortingOption))
@@ -140,13 +146,6 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
         })
     }
 
-    override fun onResume() {
-        super.onResume()
-        didClickOnSomeElement = false
-        configToolbar()
-        configFab()
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         super.onCreateView(inflater, container, savedInstanceState)?.also { view ->
             assignViews(view)
@@ -154,8 +153,16 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configSearchIconVisibility()
         showElements()
         listenToSortingOption()
         freeUpSpaceForBoxOnSearchEvent()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        didClickOnSomeElement = false
+        configToolbar()
+        configFab()
     }
 }

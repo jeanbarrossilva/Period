@@ -42,7 +42,7 @@ open class SearchActivity: PeriodActivity(), OnSearchEventListener, SearchBox.On
     private fun exitSearchOnKeyboardClosed() {
         KeyboardVisibilityEvent.registerEventListener(this) { isOpen ->
             if (shouldExitSearchOnCloseKeyboard && !isOpen)
-                onExitSearch()
+                onSearchEvent(isSearching = false)
         }
     }
 
@@ -52,24 +52,18 @@ open class SearchActivity: PeriodActivity(), OnSearchEventListener, SearchBox.On
         assignViews()
         onAddSearchBox()
         exitSearchOnKeyboardClosed()
-        addOnSearchEventListener(OnSearchEventListener { isSearching ->
+        addOnSearchEventListener { isSearching ->
             onPrimarySearchEventListening(isSearching)
-        })
-    }
-
-    override fun onBackPressed() {
-        if (shouldExitSearchOnBackPressed) onExitSearch() else super.onBackPressed()
-    }
-
-    override fun onStartSearch() {
-        onSearchEventListeners.forEach { listener ->
-            listener.onStartSearch()
         }
     }
 
-    override fun onExitSearch() {
+    override fun onBackPressed() {
+        if (shouldExitSearchOnBackPressed) onSearchEvent(isSearching = false) else super.onBackPressed()
+    }
+
+    override fun onSearchEvent(isSearching: Boolean) {
         onSearchEventListeners.forEach { listener ->
-            listener.onExitSearch()
+            listener.onSearchEvent(isSearching)
         }
     }
 
