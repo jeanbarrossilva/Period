@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.period.ui.composable
+package com.jeanbarrossilva.period.ui.compose
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,10 +14,10 @@ import com.google.accompanist.pager.rememberPagerState
 import com.jeanbarrossilva.period.extensions.number.dp
 import com.jeanbarrossilva.period.extensions.view.updatePadding
 import com.jeanbarrossilva.period.model.ChemicalElementSortingOption
-import com.jeanbarrossilva.period.ui.composable.component.ChemicalElementHeadline
-import com.jeanbarrossilva.period.ui.composable.component.core.Landscape
-import com.jeanbarrossilva.period.ui.composable.component.core.Portrait
-import com.jeanbarrossilva.period.ui.composable.theme.PeriodTheme
+import com.jeanbarrossilva.period.ui.compose.component.ChemicalElementHeadline
+import com.jeanbarrossilva.period.ui.compose.component.core.Landscape
+import com.jeanbarrossilva.period.ui.compose.component.core.Portrait
+import com.jeanbarrossilva.period.ui.compose.theme.PeriodTheme
 import com.jeanbarrossilva.period.ui.view.ChemicalElementDetailsView
 
 @OptIn(ExperimentalPagerApi::class)

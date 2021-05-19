@@ -15,7 +15,7 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.jeanbarrossilva.period.extensions.activity.fab
 import com.jeanbarrossilva.period.extensions.activity.toolbar
 import com.jeanbarrossilva.period.model.ChemicalElementSortingOption
-import com.jeanbarrossilva.period.ui.composable.ChemicalElementDetailsUI
+import com.jeanbarrossilva.period.ui.compose.ChemicalElementDetailsUI
 import com.jeanbarrossilva.period.ui.viewmodel.ChemicalElementDetailsViewModel
 
 class ChemicalElementDetailsFragment: Fragment() {

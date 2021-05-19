@@ -22,7 +22,7 @@ import com.jeanbarrossilva.period.extensions.context.withStyledAttributes
 import com.jeanbarrossilva.period.model.ChemicalElement
 import com.jeanbarrossilva.period.model.ChemicalElementProperty.Companion.displayValue
 import com.jeanbarrossilva.period.ui.R
-import com.jeanbarrossilva.period.ui.composable.theme.androidEuclidBold
+import com.jeanbarrossilva.period.ui.compose.theme.androidEuclidBold
 
 class ChemicalElementDetailsView: AbstractComposeView {
     var element by mutableStateOf<ChemicalElement?>(null)

@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.period.ui.composable.theme
+package com.jeanbarrossilva.period.ui.compose.theme
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface

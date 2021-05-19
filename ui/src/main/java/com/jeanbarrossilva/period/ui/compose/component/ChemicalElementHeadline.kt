@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.period.ui.composable.component
+package com.jeanbarrossilva.period.ui.compose.component
 
 import android.view.ViewGroup
 import androidx.compose.foundation.layout.Arrangement
@@ -18,8 +18,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.setMargins
 import com.jeanbarrossilva.period.extensions.number.dp
 import com.jeanbarrossilva.period.model.ChemicalElement
-import com.jeanbarrossilva.period.ui.composable.theme.PeriodTheme
-import com.jeanbarrossilva.period.ui.composable.theme.androidEuclidBold
+import com.jeanbarrossilva.period.ui.compose.theme.PeriodTheme
+import com.jeanbarrossilva.period.ui.compose.theme.androidEuclidBold
 import com.jeanbarrossilva.period.ui.view.ChemicalElementSymbolView
 
 @Composable

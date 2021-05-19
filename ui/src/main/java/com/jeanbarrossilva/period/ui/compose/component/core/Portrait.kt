@@ -1,4 +1,4 @@
-package com.jeanbarrossilva.period.ui.composable.component.core
+package com.jeanbarrossilva.period.ui.compose.component.core
 
 import android.content.res.Configuration
 import androidx.compose.runtime.Composable
