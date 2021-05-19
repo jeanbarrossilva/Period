@@ -60,8 +60,7 @@ class ChemicalElementsFragment: Fragment(R.layout.fragment_chemical_elements) {
 
     private fun configFab() {
         context?.let { context ->
-            val sortingOptions = ChemicalElementSortingOption.values(context).sorted()
-            val sortingOptionTitles = sortingOptions.map { sortingOption ->
+            val sortingOptionTitles = ChemicalElementSortingOption.values(context).map { sortingOption ->
                 sortingOption.title
             }
 
