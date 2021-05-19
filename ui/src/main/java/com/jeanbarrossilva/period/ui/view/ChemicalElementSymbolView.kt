@@ -2,117 +2,100 @@ package com.jeanbarrossilva.period.ui.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.Gravity
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.view.isVisible
-import com.jeanbarrossilva.period.extensions.context.colorOf
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.AbstractComposeView
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.jeanbarrossilva.period.extensions.context.withStyledAttributes
-import com.jeanbarrossilva.period.extensions.number.dp
-import com.jeanbarrossilva.period.extensions.view.viewgroup.cardview.setContentPadding
 import com.jeanbarrossilva.period.model.ChemicalElement
+import com.jeanbarrossilva.period.model.ChemicalElementProperty.Companion.displayValue
 import com.jeanbarrossilva.period.ui.R
+import com.jeanbarrossilva.period.ui.compose.theme.androidEuclidBold
+import com.jeanbarrossilva.period.ui.compose.workaround.cardBackgroundColor
+import com.jeanbarrossilva.period.ui.compose.workaround.textColor
 
-open class ChemicalElementSymbolView: CardView {
-    private lateinit var layout: CoordinatorLayout
-    private lateinit var atomicNumberView: TextView
-    private lateinit var symbolView: TextView
-    private lateinit var atomicMassView: TextView
+open class ChemicalElementSymbolView: AbstractComposeView {
+    protected var isCompact by mutableStateOf(false)
 
-    protected var isCompact = false
-        set(isCompact) {
-            field = isCompact
-            radius = if (isCompact) 10.dp(context).toFloat() else 20.dp(context).toFloat()
-            setContentPadding(if (isCompact) 7.dp(context) else 15.dp(context))
-            atomicNumberView.textSize = if (isCompact) 10f else 14f
-            symbolView.textSize = if (isCompact) 14f else 40f
-            symbolView.setTextColor(context colorOf if (isCompact) android.R.attr.textColorSecondary else android.R.attr.textColorPrimary)
-            atomicMassView.isVisible = !isCompact
-        }
-
-    var element: ChemicalElement? = null
-        set(value) {
-            field = value
-            value?.let {
-                updateWith(it)
-            }
-        }
+    var element by mutableStateOf<ChemicalElement?>(null)
 
     constructor(context: Context): super(context) {
-        init()
+        getAttrs()
     }
 
     constructor(context: Context, attrs: AttributeSet?): super(context, attrs) {
-        init(attrs)
+        getAttrs(attrs)
     }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
-        init(attrs, defStyleAttr)
+        getAttrs(attrs, defStyleAttr)
     }
 
-    private fun updateWith(element: ChemicalElement) {
-        atomicNumberView.text = element.atomicNumber.value.toString()
-        symbolView.text = element.symbol.value
-        atomicMassView.text = element.atomicMass.value.toString()
-    }
-
-    private fun config() {
-        isCompact = false
-    }
-
-    private fun assignViews(attrs: AttributeSet?, defStyleAttr: Int) {
-        layout = CoordinatorLayout(context, attrs, defStyleAttr).apply {
-            layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        }
-        atomicNumberView = TextView(context, attrs, defStyleAttr).apply {
-            setTextColor(context colorOf android.R.attr.textColorSecondary)
-        }
-        symbolView = TextView(context, attrs, defStyleAttr).apply {
-            layoutParams = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
-                gravity = Gravity.CENTER
-                typeface = ResourcesCompat.getFont(context, R.font.android_euclid_bold)
-            }
-        }
-        atomicMassView = TextView(context, attrs, defStyleAttr).apply {
-            layoutParams = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
-                gravity = Gravity.BOTTOM and Gravity.CENTER_HORIZONTAL
-            }
-            setTextColor(context colorOf android.R.attr.textColorSecondary)
-        }
-    }
-
-    private fun getAttrs(attrs: AttributeSet?, defStyleAttr: Int) {
+    private fun getAttrs(attrs: AttributeSet? = null, defStyleAttr: Int = 0) {
         context.withStyledAttributes(attrs, defStyleAttr, R.styleable.ChemicalElementSymbolView) { index ->
             if (index == R.styleable.ChemicalElementSymbolView_element)
                 element = ChemicalElement of getInt(index, ChemicalElement.default.atomicNumber.value)
         }
     }
 
-    private fun addViews() {
-        addView(layout)
-        layout.addView(atomicNumberView)
-        layout.addView(symbolView)
-    }
+    @Composable
+    override fun Content() {
+        val size = if (isCompact) 60.dp else 150.dp
+        val shapeCornerRadius = if (isCompact) 10.dp else 20.dp
+        val elevation = 1.dp
+        val padding = if (isCompact) 7.dp else 15.dp
+        val atomicNumberFontSize = if (isCompact) 10.sp else TextUnit.Unspecified
+        val symbolFontSize = if (isCompact) TextUnit.Unspecified else 40.sp
+        val symbolAlpha = if (isCompact) ContentAlpha.medium else ContentAlpha.high
 
-    private fun populateForPreview() {
-        if (isInEditMode && element == null)
-            element = ChemicalElement.default
-    }
+        element?.let { element ->
+            Card(
+                Modifier
+                    .size(size)
+                    .padding(elevation + 2.dp),
+                RoundedCornerShape(shapeCornerRadius),
+                cardBackgroundColor(),
+                elevation = elevation
+            ) {
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                ) {
+                    Text(
+                        element.atomicNumber.displayValue,
+                        Modifier
+                            .alpha(ContentAlpha.medium),
+                        textColor(),
+                        atomicNumberFontSize
+                    )
 
-    private fun init(attrs: AttributeSet? = null, defStyleAttr: Int = 0) {
-        assignViews(attrs, defStyleAttr)
-        config()
-        getAttrs(attrs, defStyleAttr)
-        addViews()
-        populateForPreview()
-    }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val size = if (isCompact) 60.dp(context) else 150.dp(context)
-        val spec = MeasureSpec.makeMeasureSpec(size, MeasureSpec.EXACTLY)
-        super.onMeasure(spec, spec)
+                    Text(
+                        element.symbol.displayValue,
+                        Modifier
+                            .alpha(symbolAlpha)
+                            .align(Alignment.Center),
+                        textColor(),
+                        symbolFontSize,
+                        fontFamily = androidEuclidBold
+                    )
+                }
+            }
+        }
     }
 }
