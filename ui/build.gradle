@@ -47,6 +47,7 @@ android {
 
 dependencies {
     implementation project(':extensions')
+    implementation project(':extensions-compose')
     implementation project(':model')
 
     implementation 'androidx.activity:activity-compose:1.3.0-alpha07'
