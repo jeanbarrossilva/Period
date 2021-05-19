@@ -11,7 +11,8 @@ import com.jeanbarrossilva.period.extensions.kclass.values
 import java.io.Serializable
 
 @Suppress("Unused", "LongLogTag")
-sealed class ChemicalElementSortingOption<P: ChemicalElementProperty<*>>(val title: String, val equivalent: ChemicalElement.() -> P): Serializable {
+sealed class ChemicalElementSortingOption<P: ChemicalElementProperty<*>>(val title: String, val equivalent: ChemicalElement.() -> P):
+    Comparable<ChemicalElementSortingOption<*>>, Serializable {
     constructor(context: Context, representation: ChemicalElement.() -> P, @StringRes titleRes: Int):
         this(context.getString(titleRes), representation)
 
@@ -54,6 +55,10 @@ sealed class ChemicalElementSortingOption<P: ChemicalElementProperty<*>>(val tit
         },
         R.string.ChemicalElementSortingOption_ElectronConfiguration
     )
+
+    override fun compareTo(other: ChemicalElementSortingOption<*>): Int {
+        return title.compareTo(other.title)
+    }
 
     @Suppress("UNCHECKED_CAST")
     fun getElements(): List<ChemicalElement> {
