@@ -1,5 +1,7 @@
 package com.jeanbarrossilva.period.model
 
-sealed class MeasurementUnit(val symbol: String) {
+import java.io.Serializable
+
+sealed class MeasurementUnit(val symbol: String): Serializable {
     object AtomicMass: MeasurementUnit("u")
 }
