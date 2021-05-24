@@ -18,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.AbstractComposeView
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jeanbarrossilva.period.extensions.context.withStyledAttributes
@@ -59,8 +58,8 @@ open class ChemicalElementSymbolView: AbstractComposeView {
         val shapeCornerRadius = if (isCompact) 10.dp else 20.dp
         val elevation = 1.dp
         val padding = if (isCompact) 7.dp else 15.dp
-        val atomicNumberFontSize = if (isCompact) 10.sp else TextUnit.Unspecified
-        val symbolFontSize = if (isCompact) TextUnit.Unspecified else 40.sp
+        val atomicNumberFontSize = if (isCompact) 7.sp else 14.sp
+        val symbolFontSize = if (isCompact) 14.sp else 40.sp
         val symbolAlpha = if (isCompact) ContentAlpha.medium else ContentAlpha.high
 
         element?.let { element ->
