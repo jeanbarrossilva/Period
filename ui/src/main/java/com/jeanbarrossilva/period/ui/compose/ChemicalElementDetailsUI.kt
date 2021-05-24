@@ -26,7 +26,10 @@ fun ChemicalElementDetailsUI(elementIndex: Int, sortingOption: ChemicalElementSo
     val elements = sortingOption.getElements()
     val pagerState = rememberPagerState(pageCount = elements.size, initialPage = elementIndex)
 
-    PeriodTheme {
+    PeriodTheme(
+        modifier
+            .padding(bottom = 56.dp)
+    ) {
         HorizontalPager(pagerState) { pageIndex ->
             elements[pageIndex].let @Composable { element ->
                 Portrait {
