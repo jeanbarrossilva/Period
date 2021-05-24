@@ -21,8 +21,8 @@ import com.jeanbarrossilva.period.extensions.number.to
 
 val Context.inputMethodManager
     get() = getSystemService<InputMethodManager>()
-val Context.isSystemInDarkTheme
-    get() = resources.configuration.uiMode == Configuration.UI_MODE_NIGHT_YES
+val Context.isInLandscape
+    get() = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 val Context.preferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(this)
 
